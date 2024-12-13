@@ -1,13 +1,13 @@
-import './App.css'
+import "./App.css";
+import Navbar from "./Components/header/Navbar";
+import Home from "./Pages/Home";
 
 function App() {
-
-
   return (
     <>
-     <p>HEllo world</p>
+  <Home />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
