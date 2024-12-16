@@ -9,8 +9,11 @@ import MyPlaylist from "./Pages/MyPlaylist";
 import Settings from "./Pages/Settings";
 
 //Components
-import Container from "./Components/Container"
-
+import Container from "./Components/Container";
+import VideoContainer from "./Components/VideoContainer";
+import SearchBox from "./Components/SearchBox";
+import LoginComponent from "./Components/LoginComponent";
+import SignUpComponent from "./Components/SignUpComponent";
 
 export {
   History,
@@ -20,5 +23,9 @@ export {
   MyDashboard,
   MyPlaylist,
   Settings,
-  Container
+  Container,
+  VideoContainer,
+  SearchBox,
+  LoginComponent,
+  SignUpComponent,
 };
