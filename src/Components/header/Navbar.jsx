@@ -1,15 +1,23 @@
 import React from "react";
-import Logo from "../Logo/Logo";
+import AuthButton from "../Buttons/AuthButton";
 import SearchBox from "../SearchBox";
+import Logo from "../Logo/Logo";
 
 function Navbar() {
   return (
-    <div className="flex  justify-between align-middle w-full bg-red-200 p-[0.20rem]  pr-2 pl-2">
-      <div>LOGO</div>
+    <div className="flex justify-between align-middle w-full bg-slate-950 p-2 relative">
+      <div>
+        <Logo />
+      </div>
 
       <SearchBox placeholder={"Search Users...!"}></SearchBox>
 
-      <div>BUtton</div>
+      <div>
+        <AuthButton />
+      </div>
+
+      {/* Add a border with margin using a pseudo-element */}
+      <div className="absolute bottom-0 left-0 right-0 border-b border-gray-300 mx-2"></div>
     </div>
   );
 }

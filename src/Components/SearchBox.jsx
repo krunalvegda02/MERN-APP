@@ -3,7 +3,7 @@ import { SearchOutlined } from "@ant-design/icons";
 
 function SearchBox({ placeholder }) {
   return (
-    <div>
+    <div className="flex">
       <input
         type="text"
         placeholder={placeholder}
