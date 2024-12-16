@@ -23,11 +23,11 @@ const Router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/history",
+        path: "/watch-history",
         element: <History />,
       },
       {
-        path: "/likedVideos",
+        path: "/likes",
         element: <LikedVideos />,
       },
       {
@@ -35,11 +35,11 @@ const Router = createBrowserRouter([
         element: <MyContent />,
       },
       {
-        path: "/my-dashboard",
+        path: "/dashboard",
         element: <MyDashboard />,
       },
       {
-        path: "/my-playlist",
+        path: "/playlist",
         element: <MyPlaylist />,
       },
       {
@@ -52,6 +52,6 @@ const Router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={Router} />
   </StrictMode>
 );

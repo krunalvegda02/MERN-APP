@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   HomeOutlined,
   LikeOutlined,
@@ -12,15 +13,43 @@ import LeftNavbarItemBox from "../LeftNavbarItemBox";
 
 function LeftNavBar() {
   const UpperNavItems = [
-    { itemName: "Home", itemIcon: <HomeOutlined className="text-2xl" /> },
-    { itemName: "Liked Videos", itemIcon: <LikeOutlined className="text-2xl" /> },
-    { itemName: "History", itemIcon: <HistoryOutlined className="text-2xl" /> },
-    { itemName: "My Content", itemIcon: <VideoCameraOutlined className="text-2xl" /> },
-    { itemName: "My PlayLists", itemIcon: <FolderOpenOutlined className="text-2xl" /> },
+    {
+      itemName: "Home",
+      itemIcon: <HomeOutlined className="text-2xl px-2 text-white" />,
+      link: "/",
+    },
+    {
+      itemName: "Liked Videos",
+      itemIcon: <LikeOutlined className="text-2xl px-2 text-white" />,
+      link: "/likes",
+    },
+    {
+      itemName: "History",
+      itemIcon: <HistoryOutlined className="text-2xl px-2 text-white" />,
+      link: "/watch-history",
+    },
+    {
+      itemName: "My Content",
+      itemIcon: <VideoCameraOutlined className="text-2xl px-2 text-white" />,
+      link: "/my-content",
+    },
+    {
+      itemName: "My PlayLists",
+      itemIcon: <FolderOpenOutlined className="text-2xl px-2 text-white" />,
+      link: "/playlist",
+    },
   ];
   const lowerNavItems = [
-    { itemName: "My DashBoard", itemIcon: <CreditCardOutlined className="text-2xl" /> },
-    { itemName: "Settings", itemIcon: <SettingOutlined className="text-2xl" /> },
+    {
+      itemName: "My DashBoard",
+      itemIcon: <CreditCardOutlined className="text-2xl px-2 text-white" />,
+      link: "/dashboard",
+    },
+    {
+      itemName: "Settings",
+      itemIcon: <SettingOutlined className="text-2xl px-2 text-white" />,
+      link: "/settings",
+    },
   ];
 
   return (
@@ -28,22 +57,26 @@ function LeftNavBar() {
       {/* Upper Section */}
       <div className="pt-2">
         {UpperNavItems.map((item) => (
-          <LeftNavbarItemBox
-            key={item.itemName}
-            name={item.itemName}
-            icon={item.itemIcon}
-          />
+          <Link to={item.link}>
+            <LeftNavbarItemBox
+              key={item.itemName}
+              name={item.itemName}
+              icon={item.itemIcon}
+            />
+          </Link>
         ))}
       </div>
 
       {/* Lower Section */}
       <div className="absolute bottom-2">
         {lowerNavItems.map((item) => (
-          <LeftNavbarItemBox
-            key={item.itemName}
-            name={item.itemName}
-            icon={item.itemIcon}
-          />
+          <Link to={item.link}>
+            <LeftNavbarItemBox
+              key={item.itemName}
+              name={item.itemName}
+              icon={item.itemIcon}
+            />
+          </Link>
         ))}
       </div>
     </div>
