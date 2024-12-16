@@ -1,11 +1,16 @@
 import "./App.css";
 import Navbar from "./Components/header/Navbar";
-import Home from "./Pages/Home";
+import { Outlet } from "react-router-dom";
+import LeftNavBar from "./Components/leftNavBar/LeftNavBar";
 
 function App() {
   return (
     <>
-  <Home />
+      <Navbar />
+      <div className="flex-row">
+        <LeftNavBar />
+        <Outlet />
+      </div>
     </>
   );
 }

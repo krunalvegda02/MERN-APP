@@ -1,6 +1,6 @@
 import React from 'react'
 
-function LeftNavbarButton() {
+function MyContent() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function LeftNavbarButton() {
   )
 }
 
-export default LeftNavbarButton
+export default MyContent
