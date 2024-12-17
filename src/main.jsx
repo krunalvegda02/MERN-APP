@@ -11,6 +11,8 @@ import {
   MyPlaylist,
   Settings,
   History,
+  Login,
+  SignUp
 } from "./index.js";
 
 const Router = createBrowserRouter([
@@ -46,12 +48,20 @@ const Router = createBrowserRouter([
         path: "/settings",
         element: <Settings />,
       },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register-user",
+        element: <SignUp />,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <RouterProvider router={Router} />
-  </StrictMode>
+  // <StrictMode>
+  <RouterProvider router={Router} />
+  // </StrictMode>
 );
