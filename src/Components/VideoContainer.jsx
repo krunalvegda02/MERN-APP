@@ -4,7 +4,9 @@ import React from "react";
 function VideoContainer({ src, title, thumbnail, createdAt, views, owner }) {
   const playVideo = () => {};
 
+
   return (
+    
     <div className="w-1/4 p-2" onClick={playVideo}>
       {/* Image Container */}
       <div className="relative w-full  pb-[56.25%]  ">
@@ -26,8 +28,8 @@ function VideoContainer({ src, title, thumbnail, createdAt, views, owner }) {
 
           {/* Views and Created At */}
           <div className="flex justify-between text-xs text-gray-400 mt-1 overflow-auto">
-            <div>{views || 0} Views</div>
-            <p className="px-1">●</p> <div>{createdAt}</div>
+            <div>{views.length} Views </div>
+            <p className="px-1">●</p> <div> {new Date(createdAt).toLocaleDateString()}</div>
           </div>
 
           {/* Creator Info */}
@@ -35,6 +37,7 @@ function VideoContainer({ src, title, thumbnail, createdAt, views, owner }) {
         </div>
       </div>
     </div>
+    
   );
 }
 

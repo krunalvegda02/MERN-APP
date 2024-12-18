@@ -19,6 +19,8 @@ import SignUpComponent from "./Components/SignUpComponent";
 import MyVideos from "./Components/MyVideos";
 import Avatar from "./Components/Avatar";
 import NavbarUserDetails from "./Components/NavbarUserDetails";
+import HorizontalVideoContainer from "./Components/HorizontalVideoContainer";
+
 
 export {
   History,
@@ -38,4 +40,5 @@ export {
   MyVideos,
   Avatar,
   NavbarUserDetails,
+  HorizontalVideoContainer
 };
