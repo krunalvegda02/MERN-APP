@@ -18,7 +18,7 @@ function Home() {
   console.log("set VIdeos:", videos);
   return (
     <Container>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap my-2 ">
         {videos.length > 0
           ? videos.map((video) => {
               return (

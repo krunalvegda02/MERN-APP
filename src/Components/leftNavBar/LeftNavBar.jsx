@@ -53,7 +53,7 @@ function LeftNavBar() {
   ];
 
   return (
-    <div className="fixed top-[3.5rem] left-0 h-[calc(100vh-3.5rem)] w-[260px]  border-r border-white-300">
+    <div className="fixed top-[3.5rem] left-0 h-[calc(100vh-3.5rem)] w-[235px]  border-r border-white-300">
       {/* Upper Section */}
       <div className="pt-2">
         {UpperNavItems.map((item) => (
