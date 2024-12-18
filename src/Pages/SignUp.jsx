@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import { Container, SignUpComponent } from "../index";
 
 function SignUp() {
   return (
-    <div>
-      
-    </div>
-  )
+    
+      <Container>
+        <SignUpComponent />
+      </Container>
+  );
 }
 
-export default SignUp
+export default SignUp;

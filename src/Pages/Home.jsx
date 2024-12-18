@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container } from "../index";
 import { VideoContainer } from "../index";
 import axios from "axios";
-
+import { useSelector } from "react-redux";
 function Home() {
   const [videos, setVideos] = useState([]);
 
@@ -16,7 +16,6 @@ function Home() {
       .catch((error) => console.log("Error fetching videos", error));
   }, []);
   console.log("set VIdeos:", videos);
-
   return (
     <Container>
       <div className="flex flex-wrap">

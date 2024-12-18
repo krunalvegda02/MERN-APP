@@ -3,13 +3,15 @@ import { Button, Form, Input, Alert } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../redux/Current user data/userSlice";
 
 function LoginComponent() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   // Handle form submission
   const LoginUser = (values) => {
     setLoading(true);
@@ -17,6 +19,7 @@ function LoginComponent() {
       .post("/api/v1/users/login", values)
       .then((res) => {
         console.log("Login response:", res.data);
+        dispatch(setLogin(res.data.data.user));
         setErrorMessage("");
         navigate("/");
       })

@@ -16,6 +16,7 @@ import VideoContainer from "./Components/VideoContainer";
 import SearchBox from "./Components/SearchBox";
 import LoginComponent from "./Components/LoginComponent";
 import SignUpComponent from "./Components/SignUpComponent";
+import MyVideos from "./Components/MyVideos";
 
 export {
   History,
@@ -32,4 +33,5 @@ export {
   SignUpComponent,
   Login,
   SignUp,
+  MyVideos
 };

@@ -1,12 +1,15 @@
 import React from "react";
 
 function VideoContainer({ src, title, thumbnail, createdAt, views, owner }) {
+
+  const playVideo = () => {};
+
   return (
-    <div className="w-1/4 p-2">
+    <div className="w-1/4 p-2" onClick={playVideo}>
       {/* Image Container */}
       <div className="relative w-full  pb-[56.25%] overflow-hidden rounded-md">
         <img
-          src={src}
+          src={thumbnail}
           alt={thumbnail}
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -19,7 +22,7 @@ function VideoContainer({ src, title, thumbnail, createdAt, views, owner }) {
         </div>
 
         {/* Views and Created At */}
-        <div className="flex justify-between text-xs text-gray-400 mt-1">
+        <div className="flex justify-between text-xs text-gray-400 mt-1 overflow-auto">
           <div>{views}</div>
           <div>{createdAt}</div>
         </div>

@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import { Container } from "../index";
+import { MyVideos } from "../index";
 
 function MyContent() {
   return (
-    <div>
-      
-    </div>
-  )
+    <Container>
+      <MyVideos />
+    </Container>
+  );
 }
 
-export default MyContent
+export default MyContent;
