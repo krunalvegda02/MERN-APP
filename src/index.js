@@ -17,6 +17,8 @@ import SearchBox from "./Components/SearchBox";
 import LoginComponent from "./Components/LoginComponent";
 import SignUpComponent from "./Components/SignUpComponent";
 import MyVideos from "./Components/MyVideos";
+import Avatar from "./Components/Avatar";
+import NavbarUserDetails from "./Components/NavbarUserDetails";
 
 export {
   History,
@@ -33,5 +35,7 @@ export {
   SignUpComponent,
   Login,
   SignUp,
-  MyVideos
+  MyVideos,
+  Avatar,
+  NavbarUserDetails,
 };
