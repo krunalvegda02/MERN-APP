@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "../index";
 import { VideoContainer } from "../index";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
 function MyVideos() {
   const [videos, setVideos] = useState([]);
@@ -11,17 +9,17 @@ function MyVideos() {
     axios
       .get(`/api/v1/videos/my-content`)
       .then((res) => {
-        console.log("MYVIDEOS API Response:", res.data);
-        setVideos(res.data.data.videos);
+        console.log("MYVIDEOS API Response:", res.data.data);
+        setVideos(res.data.data);
       })
       .catch((error) => console.log("Error fetching videos", error));
   }, []);
   console.log("set MYVIdeos:", videos);
 
   return (
-    <Container>
+
       <div className="flex flex-wrap">
-       {videos > 0
+       {videos.length > 0
                 ? videos.map((video) => {
                     return (
                       <VideoContainer
@@ -38,7 +36,6 @@ function MyVideos() {
                   })
                 : "No Videos"}
       </div>
-    </Container>
   );
 }
 
