@@ -5,7 +5,7 @@ import Home from "./Pages/Home";
 import LikedVideos from "./Pages/LikedVideos";
 import MyContent from "./Pages/MyContent";
 import MyDashboard from "./Pages/MyDashboard";
-import MyPlaylist from "./Pages/MyPlaylist";
+import MyProfile from "./Pages/MyProfile";
 import Settings from "./Pages/Settings";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
@@ -21,6 +21,7 @@ import Avatar from "./Components/Avatar";
 import NavbarUserDetails from "./Components/NavbarUserDetails";
 import HorizontalVideoContainer from "./Components/HorizontalVideoContainer";
 
+import FloatingActionButton from "./Components/FAB/FloatingActionButton";
 
 export {
   History,
@@ -28,7 +29,7 @@ export {
   LikedVideos,
   MyContent,
   MyDashboard,
-  MyPlaylist,
+  MyProfile,
   Settings,
   Container,
   VideoContainer,
@@ -40,5 +41,6 @@ export {
   MyVideos,
   Avatar,
   NavbarUserDetails,
-  HorizontalVideoContainer
+  HorizontalVideoContainer,
+  FloatingActionButton,
 };

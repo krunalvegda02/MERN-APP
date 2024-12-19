@@ -34,9 +34,9 @@ function LeftNavBar() {
       link: "/my-content",
     },
     {
-      itemName: "My PlayLists",
+      itemName: "My Profile",
       itemIcon: <FolderOpenOutlined className="text-2xl px-2 text-white" />,
-      link: "/playlist",
+      link: "/profile",
     },
   ];
   const lowerNavItems = [

@@ -9,7 +9,7 @@ import {
   LikedVideos,
   MyContent,
   MyDashboard,
-  MyPlaylist,
+  MyProfile,
   Settings,
   History,
   Login,
@@ -45,8 +45,8 @@ const Router = createBrowserRouter([
         element: <MyDashboard />,
       },
       {
-        path: "/playlist",
-        element: <MyPlaylist />,
+        path: "/profile",
+        element: <MyProfile />,
       },
       {
         path: "/settings",

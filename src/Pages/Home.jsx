@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Container } from "../index";
 import { VideoContainer } from "../index";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { FloatingActionButton } from "../index";
+
 function Home() {
   const [videos, setVideos] = useState([]);
 
