@@ -20,7 +20,7 @@ import MyVideos from "./Components/MyVideos";
 import Avatar from "./Components/Avatar";
 import NavbarUserDetails from "./Components/NavbarUserDetails";
 import HorizontalVideoContainer from "./Components/HorizontalVideoContainer";
-
+import MyProfileComponent from "./Components/MyProfileComponent";
 import FloatingActionButton from "./Components/FAB/FloatingActionButton";
 
 export {
@@ -43,4 +43,5 @@ export {
   NavbarUserDetails,
   HorizontalVideoContainer,
   FloatingActionButton,
+  MyProfileComponent,
 };

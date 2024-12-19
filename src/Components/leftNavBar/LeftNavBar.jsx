@@ -7,7 +7,7 @@ import {
   VideoCameraOutlined,
   HistoryOutlined,
   SettingOutlined,
-  FolderOpenOutlined,
+  UserOutlined
 } from "@ant-design/icons";
 import LeftNavbarItemBox from "../LeftNavbarItemBox";
 
@@ -35,7 +35,7 @@ function LeftNavBar() {
     },
     {
       itemName: "My Profile",
-      itemIcon: <FolderOpenOutlined className="text-2xl px-2 text-white" />,
+      itemIcon: <UserOutlined className="text-2xl px-2 text-white" />,
       link: "/profile",
     },
   ];

@@ -20,35 +20,38 @@ function FloatingActionButton() {
   };
 
   const handleUpload = () => {
-    form.validateFields().then((values) => {
-      const formData = new FormData();
-      if (values.videoFile?.file)
-        formData.append("videoFile", values.videoFile.file);
-      console.log("video",values.videoFile)
-      console.log("thumbnil",values.thumbnail)
-      if (values.thumbnail?.file)
-        formData.append("thumbnail", values.thumbnail.file);
-      formData.append("title", values.title);
-      formData.append("description", values.description);
+    form
+      .validateFields()
+      .then((values) => {
+        const formData = new FormData();
+        if (values.videoFile?.file)
+          formData.append("videoFile", values.videoFile.file);
+        console.log("video", values.videoFile);
+        console.log("thumbnil", values.thumbnail);
+        if (values.thumbnail?.file)
+          formData.append("thumbnail", values.thumbnail.file);
+        formData.append("title", values.title);
+        formData.append("description", values.description);
 
-      setLoading(true);
-      axios
-        .post("/api/v1/videos/", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        })
-        .then(() => {
-          message.success("File uploaded successfully!");
-          setIsModalOpen(false);
-          form.resetFields();
-        })
-        .catch((error) => {
-          console.error("Upload Error:", error);
-          message.error("File upload failed. Please try again.");
-        })
-        .finally(() => setLoading(false));
-    }).catch(() => {
-      message.error("Please fill all required fields before uploading!");
-    });
+        setLoading(true);
+        axios
+          .post("/api/v1/videos/", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+          .then(() => {
+            message.success("File uploaded successfully!");
+            setIsModalOpen(false);
+            form.resetFields();
+          })
+          .catch((error) => {
+            console.error("Upload Error:", error);
+            message.error("File upload failed. Please try again.");
+          })
+          .finally(() => setLoading(false));
+      })
+      .catch(() => {
+        message.error("Please fill all required fields before uploading!");
+      });
   };
 
   return (
@@ -75,7 +78,11 @@ function FloatingActionButton() {
           alignItems: "center",
         }}
       >
-        {isHovered ? <span className="text-lg">Upload</span> : <span className="text-4xl">+</span>}
+        {isHovered ? (
+          <span className="text-lg">Upload</span>
+        ) : (
+          <span className="text-4xl">+</span>
+        )}
       </Fab>
 
       {/* Modal */}
@@ -83,17 +90,23 @@ function FloatingActionButton() {
         open={isModalOpen}
         onCancel={handleModalClose}
         footer={null}
-        closable={!loading}
+        closable={false}
         maskClosable={!loading}
         centered
+        width={720}
+        styles={{
+          content: { backgroundColor: "rgb(24,24,24)" },
+        }}
       >
         <header className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Upload Video</h2>
+          <h2 className="text-2xl font-semibold text-white">Upload Video</h2>
           <Button
-            type="primary"
             onClick={handleUpload}
             loading={loading}
             disabled={loading}
+            style={{
+              backgroundColor: "rgb(167 139 250 / var(--tw-bg-opacity, 1))",
+            }}
           >
             Save
           </Button>
@@ -104,22 +117,31 @@ function FloatingActionButton() {
             name="videoFile"
             rules={[{ required: true, message: "Please upload a video file!" }]}
           >
-            <Upload.Dragger
-              name="videoFile"
-              multiple={false}
-              accept="video/*"
-              maxCount={1}
-              beforeUpload={() => false} // Prevent automatic upload
-            >
-              <CloudUploadOutlined className="text-5xl text-gray-400" />
-              <p className="text-gray-500 mt-2">Drag and drop video files here.</p>
-              <Button icon={<UploadOutlined />} className="mt-4">Select File</Button>
-            </Upload.Dragger>
+            <div className="h-64">
+              <Upload.Dragger
+                name="videoFile"
+                multiple={false}
+                accept="video/*"
+                maxCount={1}
+                beforeUpload={() => false} // Prevent automatic upload
+              >
+                <CloudUploadOutlined className="text-5xl text-gray-400" />
+                <p className="text-2xl text-white mt-5">
+                  Drag and drop video files to Upload
+                </p>
+                <p className="text-gray-500 mt-2">
+                  Your videos will be private until you publish them 
+                </p>
+                <Button icon={<UploadOutlined />} className="mt-4">
+                  Select File
+                </Button>
+              </Upload.Dragger>
+            </div>
           </Form.Item>
 
           <Form.Item
             name="thumbnail"
-            label="Thumbnail"
+            label={<span className="text-base text-white">Thumbnail</span>}
             rules={[{ required: true, message: "Please upload a thumbnail!" }]}
           >
             <Upload
@@ -135,7 +157,7 @@ function FloatingActionButton() {
 
           <Form.Item
             name="title"
-            label="Title"
+            label={<span className="text-base text-white">Title</span>}
             rules={[{ required: true, message: "Please provide a title!" }]}
           >
             <input
@@ -146,8 +168,10 @@ function FloatingActionButton() {
 
           <Form.Item
             name="description"
-            label="Description"
-            rules={[{ required: true, message: "Please provide a description!" }]}
+            label={<span className="text-base text-white">Description</span>}
+            rules={[
+              { required: true, message: "Please provide a description!" },
+            ]}
           >
             <textarea
               rows="4"
