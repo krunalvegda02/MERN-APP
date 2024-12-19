@@ -1,41 +1,34 @@
 import React, { useState } from "react";
-import { Avatar } from "../index";
+import {
+  Avatar,
+  ProfileVideos,
+  ProfileTweets,
+  ProfileFollowing,
+  ProfilePlaylist,
+} from "../index";
 import { useSelector } from "react-redux";
 import { EditOutlined } from "@ant-design/icons";
 
 function MyProfileComponent() {
   const userdata = useSelector((state) => state.userData);
-  const[pageState, setPageState] = useState(1);
-
-  const openVideos = () => {
-    setPageState(1);
-  };
-  const openPlaylist = () => {
-    setPageState(2);
-  };
-  const openTweets = () => {
-    setPageState(3);
-  };
-  const openFollowing = () => {
-    setPageState(4);
-  };
+  const [pageState, setPageState] = useState(1); // Default active menu: Videos
 
   return (
     <div>
-      {/* header cover image */}
-      <div className="h-[100px] bg-white w-full ">
+      {/* Header cover image */}
+      <div className="h-[100px] bg-white w-full">
         <img
           src="https://tse1.mm.bing.net/th?id=OIP.ExnS3_PBvo0jK-W75PxmEwHaEK&pid=Api&P=0&h=180"
           alt="coverimage"
           className="object-cover h-36 w-full"
         />
       </div>
-      {/* My Profile and edit */}
-      <div className="flex justify-between p-3 ">
+
+      {/* Profile Section */}
+      <div className="flex justify-between p-3">
         <div className="flex text-left">
           <Avatar h={130} w={130} src={userdata.avatar} />
-          {/* USER DETAILS CONTAINER */}
-          <div className="flex-col  pt-11 pl-4">
+          <div className="flex-col pt-11 pl-4">
             <p className="text-white text-3xl pb-1 font-semibold">
               {userdata.fullname}
             </p>
@@ -49,31 +42,44 @@ function MyProfileComponent() {
         </div>
 
         <div className="flex justify-center bg-violet-400 mt-12 mr-5 h-9 pt-1 w-20 rounded-xl hover:bg-violet-500 hover:border duration-300">
-          <EditOutlined /> <p className="pl-2 font-medium text-lg  ">Edit</p>
+          <EditOutlined /> <p className="pl-2 font-medium text-lg">Edit</p>
         </div>
       </div>
-      {/* menu slider */}
-      <div className="flex text-white justify-evenly border-b-violet-500  mt-2 border-b-2 border-gray-500 pb-2">
-        <div onclicl={openVideos}>
-          <p className=" px-24 py-1 font-semibold text-base  hover:bg-violet-400 hover:text-black duration-100">
-            Videos
-          </p>
-        </div>
-        <div onclicl={openPlaylist}>
-          <p className=" px-24 py-1 font-semibold text-base hover:bg-violet-400 hover:text-black duration-100">
-            Playlist
-          </p>
-        </div>
-        <div onclicl={openTweets}>
-          <p className=" px-24 py-1 font-semibold text-base hover:bg-violet-400 hover:text-black duration-100">
-            Tweets
-          </p>
-        </div>
-        <div onclicl={openFollowing}>
-          <p className=" px-24 py-1 font-semibold text-base hover:bg-violet-400 hover:text-black hover:border-b-violet-700 duration-100">
-            Following
-          </p>
-        </div>
+
+      {/* Menu Bar */}
+      <div className="flex text-white justify-evenly border-b-2 border-gray-500 pb-2 mt-2">
+        {[
+          { id: 1, label: "Videos" },
+          { id: 2, label: "Playlist" },
+          { id: 3, label: "Tweets" },
+          { id: 4, label: "Following" },
+        ].map((menu) => (
+          <div
+            key={menu.id}
+            onClick={() => setPageState(menu.id)}
+            className={`px-24 py-1  ${
+              pageState === menu.id
+                ? "bg-violet-400"
+                : "hover:bg-violet-200 hover:text-black"
+            } duration-100`}
+          >
+            <p
+              className={`inline-block font-semibold text-base ${
+                pageState === menu.id ? "text-black " : ""
+              }`}
+            >
+              {menu.label}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Page Content */}
+      <div className="mt-4">
+        {pageState === 1 && <ProfileVideos />}
+        {pageState === 2 && <ProfilePlaylist />}
+        {pageState === 3 && <ProfileTweets />}
+        {pageState === 4 && <ProfileFollowing />}
       </div>
     </div>
   );

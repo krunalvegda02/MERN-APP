@@ -23,6 +23,12 @@ import HorizontalVideoContainer from "./Components/HorizontalVideoContainer";
 import MyProfileComponent from "./Components/MyProfileComponent";
 import FloatingActionButton from "./Components/FAB/FloatingActionButton";
 
+//Profile components
+import ProfileVideos from "./Components/profile-components/ProfileVideos";
+import ProfileTweets from "./Components/profile-components/ProfileTweets";
+import ProfilePlaylist from "./Components/profile-components/ProfilePlaylist";
+import ProfileFollowing from "./Components/profile-components/ProfileFollowing";
+
 export {
   History,
   Home,
@@ -44,4 +50,8 @@ export {
   HorizontalVideoContainer,
   FloatingActionButton,
   MyProfileComponent,
+  ProfileVideos,
+  ProfileTweets,
+  ProfilePlaylist,
+  ProfileFollowing,
 };
