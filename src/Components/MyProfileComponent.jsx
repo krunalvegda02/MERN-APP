@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Avatar,
   ProfileVideos,
@@ -11,31 +11,36 @@ import { EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { message } from "antd";
 
-function MyProfileComponent({ isUser = true }) {
+function MyProfileComponent({ isChannel = false }) {
   const userdata = useSelector((state) => state.userData);
-  const [pageState, setPageState] = useState(1); // Default active menu: Videos
+  const [pageState, setPageState] = useState(1);
+  const [channeldata, setChanneldata] = useState(null);
 
-  {
-    if (!isUser) {
+  useEffect(() => {
+    if (isChannel) {
       axios
         .get(`/api/v1/c/:username`)
         .then((res) => {
-          console.log("API RESPONSE:", res);
+          setChanneldata(res.data.data);
         })
         .catch((err) => {
-          message.error("Channel fetching error", err);
-          console.log("API ERROR:", err);
+          message.error("Channel fetching error");
+          console.error("API ERROR:", err);
         });
     }
-  }
+  }, [isChannel]);
+
+  const profileData = isChannel ? channeldata : userdata;
 
   return (
     <div>
       {/* Header cover image */}
       <div className="h-[100px] bg-white w-full">
         <img
-          src={isUser ? userdata.coverImage : res.data.data.coverImage}
-          // "https://tse1.mm.bing.net/th?id=OIP.ExnS3_PBvo0jK-W75PxmEwHaEK&pid=Api&P=0&h=180"
+          src={
+            profileData.coverImage ||
+            "https://tse1.mm.bing.net/th?id=OIP.ExnS3_PBvo0jK-W75PxmEwHaEK&pid=Api&P=0&h=180"
+          }
           alt="coverimage"
           className="object-cover h-36 w-full"
         />
@@ -44,17 +49,13 @@ function MyProfileComponent({ isUser = true }) {
       {/* Profile Section */}
       <div className="flex justify-between p-3">
         <div className="flex text-left">
-          <Avatar
-            h={130}
-            w={130}
-            src={isUser ? userdata.avatar : res.data.data.avatar}
-          />
+          <Avatar h={130} w={130} src={profileData.avatar} />
           <div className="flex-col pt-11 pl-4">
             <p className="text-white text-3xl pb-1 font-semibold">
-              {isUser ? userdata.fullname : res.data.data.fullname}
+              {profileData.fullname}
             </p>
             <p className="text-gray-300 text-sm pb-0.5">
-              @{isUser ? userdata.username : res.data.data.username}
+              @{profileData.username}
             </p>
             <div className="flex">
               <p className="text-gray-300 text-sm">{100} Subscribers</p>
@@ -64,9 +65,11 @@ function MyProfileComponent({ isUser = true }) {
           </div>
         </div>
         <Link to="/settings">
-          {" "}
           <div className="flex justify-center bg-violet-400 mt-12 mr-5 h-9 pt-1 w-20 rounded-xl hover:bg-violet-500 hover:border duration-300">
-            <EditOutlined /> <p className="pl-2 font-medium text-lg">Edit</p>
+            <EditOutlined />
+            <p className="pl-2 font-medium text-lg">
+              {/* {isChannel ? Subscribe : Edit} */}
+            </p>
           </div>
         </Link>
       </div>
@@ -101,10 +104,10 @@ function MyProfileComponent({ isUser = true }) {
 
       {/* Page Content */}
       <div className="mt-2">
-        {pageState === 1 && <ProfileVideos />}
-        {pageState === 2 && <ProfilePlaylist />}
-        {pageState === 3 && <ProfileTweets />}
-        {pageState === 4 && <ProfileFollowing />}
+        {pageState === 1 && <ProfileVideos isChannel={isChannel} />}
+        {pageState === 2 && <ProfilePlaylist isChannel={isChannel} />}
+        {pageState === 3 && <ProfileTweets isChannel={isChannel} />}
+        {pageState === 4 && <ProfileFollowing isChannel={isChannel} />}
       </div>
     </div>
   );

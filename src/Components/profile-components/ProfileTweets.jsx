@@ -5,7 +5,7 @@ import { LikeOutlined, DislikeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 // import { Input } from "antd";
 
-function ProfileTweets() {
+function ProfileTweets({ isChannel}) {
   const userid = useSelector((state) => state.userData._id);
   const [tweets, setTweets] = useState(null);
 

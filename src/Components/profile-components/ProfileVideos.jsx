@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, MyVideos } from "../../index";
 
-function ProfileVideos() {
+function ProfileVideos({ isChannel }) {
   return (
     <div>
       <MyVideos />

@@ -2,7 +2,7 @@ import React from 'react'
 import { Container } from "../../index";
 
 
-function ProfilePlaylist() {
+function ProfilePlaylist({ isChannel}) {
   return (
     <div>
       
