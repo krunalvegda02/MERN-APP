@@ -1,5 +1,4 @@
 //Pages
-
 import History from "./Pages/History";
 import Home from "./Pages/Home";
 import LikedVideos from "./Pages/LikedVideos";
@@ -22,6 +21,8 @@ import NavbarUserDetails from "./Components/NavbarUserDetails";
 import HorizontalVideoContainer from "./Components/HorizontalVideoContainer";
 import MyProfileComponent from "./Components/MyProfileComponent";
 import FloatingActionButton from "./Components/FAB/FloatingActionButton";
+import UserCard from "./Components/UserCard"
+import DashboardComponent from "./Components/DashboardComponent";
 
 //Profile components
 import ProfileVideos from "./Components/profile-components/ProfileVideos";
@@ -54,4 +55,6 @@ export {
   ProfileTweets,
   ProfilePlaylist,
   ProfileFollowing,
+  UserCard,
+  DashboardComponent
 };

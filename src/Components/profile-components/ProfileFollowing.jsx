@@ -1,10 +1,10 @@
 import React from 'react'
-import { Container } from "../../index";
+import { UserCard } from "../../index";
 
 function ProfileFollowing({ isChannel}) {
   return (
     <div>
-      
+      <UserCard />
     </div>
   )
 }

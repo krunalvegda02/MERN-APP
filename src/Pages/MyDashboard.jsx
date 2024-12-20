@@ -1,11 +1,10 @@
-import React from 'react'
+import React from "react";
+import { Container,DashboardComponent } from "../index";
 
 function MyDashboard() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <Container>
+    <DashboardComponent />
+  </Container>;
 }
 
-export default MyDashboard
+export default MyDashboard;

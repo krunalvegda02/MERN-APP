@@ -35,7 +35,7 @@ function MyProfileComponent({ isChannel = false }) {
   return (
     <div>
       {/* Header cover image */}
-      <div className="h-[100px] bg-white w-full">
+      <div className="h-[100px] bg-white">
         <img
           src={
             profileData.coverImage ||
@@ -47,7 +47,7 @@ function MyProfileComponent({ isChannel = false }) {
       </div>
 
       {/* Profile Section */}
-      <div className="flex justify-between p-3">
+      <div className="flex justify-between p-3 ">
         <div className="flex text-left">
           <Avatar h={130} w={130} src={profileData.avatar} />
           <div className="flex-col pt-11 pl-4">
@@ -65,17 +65,17 @@ function MyProfileComponent({ isChannel = false }) {
           </div>
         </div>
         <Link to="/settings">
-          <div className="flex justify-center bg-violet-400 mt-12 mr-5 h-9 pt-1 w-20 rounded-xl hover:bg-violet-500 hover:border duration-300">
+          <div className="flex justify-center bg-violet-400 mt-12 mr-3 h-9 pt-1 w-20 rounded-md hover:bg-violet-500 hover:border duration-300">
             <EditOutlined />
             <p className="pl-2 font-medium text-lg">
-              {/* {isChannel ? Subscribe : Edit} */}
+              {isChannel ? "Subscribe" : "Edit" }
             </p>
           </div>
         </Link>
       </div>
 
       {/* Menu Bar */}
-      <div className="flex text-white justify-evenly border-b-2 border-gray-500 pb-2 mt-2">
+      <div className="flex text-white justify-evenly border-b-2 border-gray-500 pb-2 mt-2 mr-3">
         {[
           { id: 1, label: "Videos" },
           { id: 2, label: "Playlist" },
@@ -103,7 +103,7 @@ function MyProfileComponent({ isChannel = false }) {
       </div>
 
       {/* Page Content */}
-      <div className="mt-2">
+      <div className="mt-2 mr-3">
         {pageState === 1 && <ProfileVideos isChannel={isChannel} />}
         {pageState === 2 && <ProfilePlaylist isChannel={isChannel} />}
         {pageState === 3 && <ProfileTweets isChannel={isChannel} />}

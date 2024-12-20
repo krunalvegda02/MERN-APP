@@ -36,7 +36,7 @@ function ProfileTweets({ isChannel}) {
         <input
           name="tweet"
           // value={tweet}
-          className="w-full h-16 p-2 pb-9 border text-lg text-white border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-violet-500 bg-slate-700 pr-16"
+          className="w-full h-16 p-2 pb-9 border text-lg text-white border-gray-300  focus:outline-none focus:ring-2 focus:ring-violet-500 bg-slate-700 pr-16"
           placeholder="Write an Announcement..."
         />
         <button
