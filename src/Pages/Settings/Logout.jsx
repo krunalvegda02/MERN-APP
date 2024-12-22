@@ -35,9 +35,4 @@ function Logout() {
 
 export default Logout;
 
-{
-  /* <div className="bg-white">
-<p>logout</p>
-<button onClick={handleLogout}>LOGOUT</button>
-</div> */
-}
+

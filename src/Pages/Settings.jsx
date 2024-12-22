@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import LeftNavbarItemBox from "../Components/LeftNavbarItemBox";
 import {
-  HomeOutlined,
-  LikeOutlined,
-  HistoryOutlined,
+  EditFilled,
+  KeyOutlined,
+  LogoutOutlined,
   DoubleLeftOutlined,
 } from "@ant-design/icons";
 import { Container } from "../index";
@@ -13,17 +13,17 @@ function Settings({ show, onBack }) {
   const settingItems = [
     {
       itemName: "Edit Profile",
-      itemIcon: <HomeOutlined className="text-2xl px-2 text-white" />,
+      itemIcon: <EditFilled className="text-xl px-2 text-white py-1 " />, 
       link: "/edit-profile",
     },
     {
       itemName: "Change Password",
-      itemIcon: <LikeOutlined className="text-2xl px-2 text-white" />,
-      link: "/change-password",
+      itemIcon: <KeyOutlined  className="text-xl py-1 px-2 text-white" />,
+      link: "/change-password",  
     },
     {
-      itemName: "LogPut !",
-      itemIcon: <HistoryOutlined className="text-2xl px-2 text-white" />,
+      itemName: "LogOut !",
+      itemIcon: <LogoutOutlined className="text-xl py-1 px-2 text-white" />,
       link: "/logout",
     },
   ];
