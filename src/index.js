@@ -21,7 +21,7 @@ import NavbarUserDetails from "./Components/NavbarUserDetails";
 import HorizontalVideoContainer from "./Components/HorizontalVideoContainer";
 import MyProfileComponent from "./Components/MyProfileComponent";
 import FloatingActionButton from "./Components/FAB/FloatingActionButton";
-import UserCard from "./Components/UserCard"
+import UserCard from "./Components/UserCard";
 import DashboardComponent from "./Components/DashboardComponent";
 
 //Profile components
@@ -29,6 +29,11 @@ import ProfileVideos from "./Components/profile-components/ProfileVideos";
 import ProfileTweets from "./Components/profile-components/ProfileTweets";
 import ProfilePlaylist from "./Components/profile-components/ProfilePlaylist";
 import ProfileFollowing from "./Components/profile-components/ProfileFollowing";
+
+//Setting Pages
+import EditProfile from "./Pages/Settings/EditProfile";
+import ChangePassword from "./Pages/Settings/ChangePassword";
+import Logout from "./Pages/Settings/Logout";
 
 export {
   History,
@@ -56,5 +61,8 @@ export {
   ProfilePlaylist,
   ProfileFollowing,
   UserCard,
-  DashboardComponent
+  DashboardComponent,
+  EditProfile,
+  ChangePassword,
+  Logout,
 };

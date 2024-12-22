@@ -68,7 +68,7 @@ function DashboardComponent() {
       <div className="border w-full rounded-sm mt-3">
         {/* Table Header */}
         <div
-          className="grid border font-medium px-3 py-1 text-lg text-white text-left bg-slate-700"
+          className="grid border font-medium px-3 py-1 text-base text-white text-left bg-slate-700"
           style={{
             gridTemplateColumns: "80px 128px 1fr 170px 150px 60px",
           }}

@@ -57,7 +57,7 @@ function LeftNavBar() {
       {/* Upper Section */}
       <div className="pt-2">
         {UpperNavItems.map((item) => (
-          <Link to={item.link}>
+          <Link to={item.link} key={item.link}>
             <LeftNavbarItemBox
               key={item.itemName}
               name={item.itemName}
@@ -70,7 +70,7 @@ function LeftNavBar() {
       {/* Lower Section */}
       <div className="absolute bottom-2">
         {lowerNavItems.map((item) => (
-          <Link to={item.link}>
+          <Link to={item.link} key={item.link}>
             <LeftNavbarItemBox
               key={item.itemName}
               name={item.itemName}

@@ -14,6 +14,9 @@ import {
   History,
   Login,
   SignUp,
+  EditProfile,
+  Logout,
+  ChangePassword,
 } from "./index.js";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react"; // Import PersistGate
@@ -59,6 +62,18 @@ const Router = createBrowserRouter([
       {
         path: "/register-user",
         element: <SignUp />,
+      },
+      {
+        path: "/edit-profile",
+        element: <EditProfile />,
+      },
+      {
+        path: "/change-password",
+        element: <ChangePassword />,
+      },
+      {
+        path: "/logout",
+        element: <Logout />,
       },
     ],
   },

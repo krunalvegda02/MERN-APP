@@ -64,7 +64,7 @@ function MyProfileComponent({ isChannel = false }) {
             </div>
           </div>
         </div>
-        <Link to="/settings">
+        <Link to="/edit-profile">
           <div className="flex justify-center bg-violet-400 mt-12 mr-3 h-9 pt-1 w-20 rounded-md hover:bg-violet-500 hover:border duration-300">
             <EditOutlined />
             <p className="pl-2 font-medium text-lg">
