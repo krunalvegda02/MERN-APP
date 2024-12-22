@@ -14,27 +14,20 @@ function Logout() {
   };
   return (
     <Container>
-      <div className="">
-        <Modal
-          styles={{
-            content: { backgroundColor: "#fca5a5" },
-          }}
-          visible={true}
-          closable={false}
-          footer={true}
-        >
-          <p className="bg-red-300 text-red-600 text-2xl">
+      <div className="h-1/2 w-2/3 mt-36 ml-36 p-10 bg-slate-900 align-middle justify-center flex rounded-xl">
+        <div>
+          <p className=" text-white text-2xl pb-3 font-semibold" >
             Are you sure! Do You Want to Log Out ?
           </p>
           <div className="flex justify-end mt-5">
             <Button
               onClick={handleLogout}
-              className="px-15 py-2 text-lg bg-red-500 h-10 w-40 font-semibold"
+              className="px-15 py-2.5  text-lg text-red-200 bg-red-500 h-10 w-40 font-bold"
             >
               Logout
             </Button>
           </div>
-        </Modal>
+        </div>
       </div>
     </Container>
   );

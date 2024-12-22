@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
+import {Settings} from "../../index"
 import { Link } from "react-router-dom";
 import {
   HomeOutlined,
@@ -12,6 +13,16 @@ import {
 import LeftNavbarItemBox from "../LeftNavbarItemBox";
 
 function LeftNavBar() {
+  const [showSettings, setShowSettings] = useState(false);
+
+  const handleSettingsClick = () => {
+    setShowSettings(true);
+  };
+
+  const handleBackToMainNav = () => {
+    setShowSettings(false);
+  };
+
   const UpperNavItems = [
     {
       itemName: "Home",
@@ -48,7 +59,7 @@ function LeftNavBar() {
     {
       itemName: "Settings",
       itemIcon: <SettingOutlined className="text-2xl px-2 text-white" />,
-      link: "/settings",
+      onClick: handleSettingsClick,
     },
   ];
 
@@ -57,7 +68,7 @@ function LeftNavBar() {
       {/* Upper Section */}
       <div className="pt-2">
         {UpperNavItems.map((item) => (
-          <Link to={item.link} key={item.link}>
+          <Link to={item.link} >
             <LeftNavbarItemBox
               key={item.itemName}
               name={item.itemName}
@@ -70,7 +81,7 @@ function LeftNavBar() {
       {/* Lower Section */}
       <div className="absolute bottom-2">
         {lowerNavItems.map((item) => (
-          <Link to={item.link} key={item.link}>
+          <Link to={item.link}  onClick={item.onClick || null}>
             <LeftNavbarItemBox
               key={item.itemName}
               name={item.itemName}
@@ -79,6 +90,12 @@ function LeftNavBar() {
           </Link>
         ))}
       </div>
+
+        {/* Settings Navbar */}
+        <Settings
+        show={showSettings}
+        onBack={handleBackToMainNav}
+      />
     </div>
   );
 }

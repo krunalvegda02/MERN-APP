@@ -32,7 +32,7 @@ function ChangePassword() {
   };
   return (
     <Container>
-      <div className="mt-5 p-6 px-40">
+      <div className="mt-24 p-6 px-40">
         <div className="">
           <p className="text-3xl text-start mb-10 font-semibold text-white">
             Change Your Password
