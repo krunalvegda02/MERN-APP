@@ -17,10 +17,10 @@ function ChangePassword() {
       axios
         .post("/api/v1/users/password-change", values)
         .then((res) => {
-            console.log("res",res);
+          // console.log("res",res);
           setLoading(false);
           message.success("Password changed successfully!");
-            form.resetFields(); 
+          form.resetFields();
         })
         .catch((err) => {
           console.log("API ERROR:", err);
