@@ -2,7 +2,7 @@ import React from "react";
 import { setLogOut } from "../../redux/Current user data/userSlice";
 import { Container } from "../../index";
 import { useDispatch } from "react-redux";
-import { Button, Modal } from "antd";
+import { Button, message, Modal } from "antd";
 import { useNavigate } from "react-router-dom";
 
 function Logout() {
@@ -11,12 +11,22 @@ function Logout() {
   const handleLogout = () => {
     dispatch(setLogOut());
     navigate("/login");
+    axios
+      .post("/api/v1/logout")
+      .then((res) => {
+        message.success("Log out Succesfully");
+        dispatch(setLogOut());
+        navigate("/login");
+      })
+      .catch((err) => {
+        message.error("Failed to Log out");
+      });
   };
   return (
     <Container>
       <div className="h-1/2 w-2/3 mt-36 ml-36 p-10 bg-slate-900 align-middle justify-center flex rounded-xl">
         <div>
-          <p className=" text-white text-2xl pb-3 font-semibold" >
+          <p className=" text-white text-2xl pb-3 font-semibold">
             Are you sure! Do You Want to Log Out ?
           </p>
           <div className="flex justify-end mt-5">
@@ -34,5 +44,3 @@ function Logout() {
 }
 
 export default Logout;
-
-

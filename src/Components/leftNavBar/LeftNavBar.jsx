@@ -59,6 +59,7 @@ function LeftNavBar() {
     {
       itemName: "Settings",
       itemIcon: <SettingOutlined className="text-2xl px-2 text-white" />,
+      link: "#",
       onClick: handleSettingsClick,
     },
   ];
@@ -68,7 +69,7 @@ function LeftNavBar() {
       {/* Upper Section */}
       <div className="pt-2">
         {UpperNavItems.map((item) => (
-          <Link to={item.link} >
+          <Link to={item.link} key={item.itemName}>
             <LeftNavbarItemBox
               key={item.itemName}
               name={item.itemName}
@@ -81,7 +82,7 @@ function LeftNavBar() {
       {/* Lower Section */}
       <div className="absolute bottom-2">
         {lowerNavItems.map((item) => (
-          <Link to={item.link}  onClick={item.onClick || null}>
+          <Link to={item.link}  onClick={item.onClick || null} key={item.itemName}>
             <LeftNavbarItemBox
               key={item.itemName}
               name={item.itemName}

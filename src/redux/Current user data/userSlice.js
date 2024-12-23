@@ -17,9 +17,12 @@ export const userSlice = createSlice({
         state.isAuthenticated = false;
         state.userData = null;
       },
+      updateLogin: (state, action) => {
+        state.userData = action.payload; 
+      }
     // getCurretUserId:
   },
 });
 
-export const { setLogin, setLogOut } = userSlice.actions;
+export const { setLogin, setLogOut, updateLogin } = userSlice.actions;
 export default userSlice.reducer;
