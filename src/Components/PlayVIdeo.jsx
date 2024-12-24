@@ -1,42 +1,113 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactPlayer from "react-player";
-import { Container, UserCard, SubscribeBtn } from "../index";
+import { useParams, Link } from "react-router-dom";
+import { Container, UserCard } from "../index";
 import {
   LikeOutlined,
   LikeFilled,
   DislikeOutlined,
   DislikeFilled,
 } from "@ant-design/icons";
+import axios from "axios";
+import { message } from "antd";
+import { useEffect } from "react";
 
-function PlayVIdeo({ id, src }) {
+function PlayVIdeo() {
+  const videoId = useParams();
+  // console.log("videoid", videoId.id);
+
+  const [userData, setuserData] = useState();
+  const [videoData, setVideoData] = useState();
+
+  const [likes, setLikes] = useState(10);
+  const [dislikes, setDislikes] = useState(20);
+  const [liked, setLiked] = useState(false);
+  const [disliked, setDisliked] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`/api/v1/videos/${videoId.id}`)
+      .then((res) => {
+        console.log("API Response:", res.data.data);
+        setVideoData(res.data.data.video);
+        setuserData(res.data.data.user);
+        // setuserData(res)
+      })
+      .catch((error) => console.log("Error fetching videos", error));
+  }, []);
+
+ 
+  // useEffect(() => {
+  //   if (videoData) {
+  //     console.log("Updated videoData:", videoData);
+  //     console.log("Updated userData:", userData);
+  //   }
+  // }, [videoData]);
+
+  const toggleLike = () => {
+    axios
+      .post(`/api/v1/likes/toggle/v/${videoId}`)
+      .then((res) => {
+        console.log("API RES:", res);
+      })
+      .catch((err) => {
+        message.error("Error during like");
+      });
+  };
+
+  if (!videoData) {
+    return <div className="text-white text-5xl">Loading</div>;
+  }
+
   return (
     <Container>
-      <div>
-        <ReactPlayer
-          url="https://res.cloudinary.com/krunalvegda02/video/upload/v1733937997/sussqe7pttnvfprflkn0.mp4"
-          controls={true}
-          width={"full"}
-          height={"calc(100vh - 153px)"}
-        />
-        <div className="text-lg text-white text-left p-2 pb-0 align-middle">
-          {/* <p className="text-2xl font-semibold "> VIDEO TITLE</p> */}
-          <p className="text-2xl font-semibold ">
-            Description Lorem ipsum dolor sit amet, consectetur adipisicing
-            elit. Explicabo, odit.
-          </p>
-          <div className="flex  justify-between ">
-            <div className="flex">
-            <UserCard />
-            </div>
-           
-            <div className="flex">
-              <LikeOutlined className="pr-2 text-2xl" /> <p className="pt-4">{10} likes</p>
-              <p className="px-2 text-gray-500 pt-4">•</p>
-              <DislikeOutlined className="pr-2 text-2xl" /> <p className="pt-4">{20} dislikes</p>
+      <Link to="/play-video">
+        <div>
+          <ReactPlayer
+            playing={true}
+            pip={false}
+            loop={true}
+            url={videoData.video}
+            controls={true}
+            width={"full"}
+            height={"calc(100vh - 153px)"}
+          />
+          <div className="text-lg text-white text-left p-2 pb-0 align-middle">
+            <p className="text-2xl font-semibold ">{videoData.description}</p>
+            <div className="flex  justify-between ">
+              <div className="flex">
+                <UserCard username={userData.username} />
+              </div>
+
+              <div className="flex">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={toggleLike}
+                >
+                  {liked ? (
+                    <LikeFilled className="pr-2 text-2xl text-blue-500" />
+                  ) : (
+                    <LikeOutlined className="pr-2 text-2xl" />
+                  )}
+                  <p>{likes} likes</p>
+                </div>
+                <p className="px-2 text-gray-500 pt-4">•</p>
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={toggleLike}
+                >
+                  {disliked ? (
+                    <DislikeFilled className="pr-2 text-2xl text-red-500" />
+                  ) : (
+                    <DislikeOutlined className="pr-2 text-2xl" />
+                  )}
+                  <p>{dislikes} dislikes</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </Container>
   );
 }

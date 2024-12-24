@@ -25,6 +25,7 @@ function Home() {
               return (
                 <VideoContainer
                   key={video._id}
+                  videoId={video._id}
                   title={video.title}
                   thumbnail={video.thumbnail}
                   views={video.views || 0}

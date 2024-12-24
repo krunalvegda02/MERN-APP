@@ -30,7 +30,7 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <PlayVIdeo />,
+        element: <Home />,
       },
       {
         path: "/watch-history",
@@ -75,6 +75,10 @@ const Router = createBrowserRouter([
       {
         path: "/logout",
         element: <Logout />,
+      },
+      {
+        path: "/play-video/:id",
+        element: <PlayVIdeo />,
       },
     ],
   },
