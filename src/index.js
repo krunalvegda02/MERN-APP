@@ -23,6 +23,8 @@ import MyProfileComponent from "./Components/MyProfileComponent";
 import FloatingActionButton from "./Components/FAB/FloatingActionButton";
 import UserCard from "./Components/UserCard";
 import DashboardComponent from "./Components/DashboardComponent";
+import PlayVIdeo from "./Components/PlayVIdeo";
+import SubscribeBtn from "./Components/SubscribeBtn";
 
 //Profile components
 import ProfileVideos from "./Components/profile-components/ProfileVideos";
@@ -65,4 +67,6 @@ export {
   EditProfile,
   ChangePassword,
   Logout,
+  PlayVIdeo,
+  SubscribeBtn
 };

@@ -15,37 +15,52 @@ function EditProfile() {
   const [form] = Form.useForm();
 
   const [avatarFile, setAvatarFile] = useState(null);
+  const [coverFile, setCoverFile] = useState(null);
+
+  const [coverImage, setCoverImage] = useState(
+    useSelector((state) => state.userData.coverImage)
+  );
   const [avatar, setAvatar] = useState(
     useSelector((state) => state.userData.avatar)
   );
 
-  const handleFileChange = (e) => {
-    console.log("e", e);
-
+  const handleAvatarChange = (e) => {
+    console.log(e.file);
     if (e.file) {
       setAvatarFile(e.file);
     }
   };
+  const handleCoverChange = (e) => {
+    console.log("e", e);
 
-  console.log("Set file:", avatarFile);
+    if (e.file) {
+      setCoverFile(e.file);
+    }
+  };
 
   //upload coverimage to database for update
-  const uploadAvatar = async () => {
+  const uploadAvatar = async (file) => {
+    setLoading(true);
+    if (!file) {
+      setLoading(false);
+      message.error("No file selected for upload!");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("avatar", avatarFile);
 
-
-    axios
+    await axios
       .patch("/api/v1/users/avatar", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
-        dispatch(updateLogin(res.data.data))
         message.success("Avatar updated successfully!");
         setLoading(false);
+        dispatch(updateLogin(res.data.data));
         setAvatar(res.data.data.avatar);
         console.log(("API RES", res));
-        console.log("set avatar rr", avatar);
+        console.log("setavatar profile", avatar);
       })
       .catch((err) => {
         console.error("Upload failed:", err);
@@ -54,7 +69,34 @@ function EditProfile() {
   };
 
   //upload coverimage to database for update
-  const uploadCoverImage = () => {};
+  const uploadCoverImage = (coverfile) => {
+    setLoading(true);
+    if (!coverfile) {
+      setLoading(false);
+      message.error("No file selected for upload!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("coverImage", coverFile);
+
+    axios
+      .patch("/api/v1/users/cover-image", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => {
+        message.success("Cover Image updated successfully!");
+        setLoading(false);
+        dispatch(updateLogin(res.data.data));
+        setCoverImage(res.data.data.coverImage);
+        console.log(("API RES", res));
+        console.log("setavatar profile", coverImage);
+      })
+      .catch((err) => {
+        console.error("Upload failed:", err);
+        message.error("Failed to upload Cover Image.");
+      });
+  };
 
   //Close model for coverImage upload
   const closeUploadCoverImage = () => {
@@ -77,7 +119,9 @@ function EditProfile() {
           message.success("Account updated succesfully");
           setLoading(false);
           form.resetFields();
-          navigate("/profile");
+          setTimeout(() => {
+            navigate("/profile");
+          }, 500);
         });
       })
       .catch((err) => {
@@ -89,67 +133,85 @@ function EditProfile() {
   return (
     <Container>
       <div className="flex justify-center align-middle mt-10">
-        <div className="p-10  w-2/3 rounded-xl bg-red-300">
+        <div className="p-3  w-2/3 rounded-xl">
           <div>
-            <p className="flex text-3xl text-white font-semibold mb-3">
+            <p className="flex text-3xl text-white font-semibold mb-7">
               Edit Profile
             </p>
           </div>
-          <div className="text-start ">
-            <Avatar size={85} src={avatar}></Avatar>
+          <div className="flex justify-between">
+            <div>
+              <div className="text-start ml-6">
+                <Avatar size={100} src={avatar}></Avatar>
+              </div>
 
-            <ImgCrop
-              showReset={true}
-              resetText="Reset"
-              cropShape="round"
-              onModalCancel={closeModal}
-              modalOk="Upload"
-              modalTitle={
-                <p className="text-2xl font-semibold ">Update Avatar</p>
-              }
-              // onChange={handleFileChange}
-              onModalOk={uploadAvatar}
-            >
-              <Upload
-                name="avatar"
-                showUploadList={false}
-                beforeUpload={() => false}
-                maxCount={1}
-                onChange={handleFileChange}
-                accept="image/*"
+              <div className="text-start mb-5">
+                <ImgCrop
+                  showReset={true}
+                  resetText="Reset"
+                  cropShape="round"
+                  onModalCancel={closeModal}
+                  modalOk="Upload"
+                  onModalOk={() => uploadAvatar(avatarFile)}
+                  modalTitle={
+                    <p className="text-2xl font-semibold ">Update Avatar</p>
+                  }
+                >
+                  <Upload
+                    name="avatar"
+                    showUploadList={false}
+                    beforeUpload={() => false}
+                    maxCount={1}
+                    onChange={handleAvatarChange}
+                    accept="image/*"
+                  >
+                    <p className="text-lg mt-2 text-violet-600">
+                      <UploadOutlined className="mr-2" />
+                      Change Avatar
+                    </p>
+                  </Upload>
+                </ImgCrop>
+              </div>
+            </div>
+
+            <div className="">
+              <div>
+                <img src={coverImage} height={50} width={350}></img>
+              </div>
+              <ImgCrop
+                showReset={true}
+                resetText="Reset"
+                cropShape="rect"
+                aspect={1640 / 856}
+                onModalCancel={closeUploadCoverImage}
+                modalOk="Upload"
+                onModalOk={() => uploadCoverImage(coverFile)}
+                modalTitle={
+                  <p className="text-2xl font-semibold ">Update Cover Image</p>
+                }
               >
-                <Button icon={<UploadOutlined />}>Change Avatar</Button>
-              </Upload>
-            </ImgCrop>
-          </div>
-          <div className="my-2 bg-white rounded h-10 w-1/2 border border-violet-500 border-dashed m-auto">
-            <ImgCrop
-              onModalOk={uploadCoverImage}
-              onModalCancel={closeUploadCoverImage}
-              modalOk="Upload"
-              modalTitle="Update Cover Image"
-            >
-              <Upload
-                name="coverImage"
-                showUploadList={false}
-                beforeUpload={() => false}
-                onChange={"/"}
-                accept="image/*"
-              >
-                <div className="flex mt-1.5">
-                  <UploadOutlined className="text-xl font-semibold pr-2" />
-                  <p className="text-base font-semibold">
-                    Click to Upload your Cover-Image
+                <Upload
+                  name="coverImage"
+                  showUploadList={false}
+                  beforeUpload={() => false}
+                  maxCount={1}
+                  onChange={handleCoverChange}
+                  accept="image/*"
+                >
+                  <p className="text-lg mt-2 text-violet-600">
+                    <UploadOutlined className="mr-2" />
+                    Change CoverImage
                   </p>
-                </div>
-              </Upload>
-            </ImgCrop>
+                </Upload>
+              </ImgCrop>
+            </div>
           </div>
+
           <Form
             onFinish={EditProfile}
             layout="vertical"
             name="edit profile"
-            loading={loading}
+            {...(loading ? { loading: true } : {})}
             form={form}
           >
             <Form.Item

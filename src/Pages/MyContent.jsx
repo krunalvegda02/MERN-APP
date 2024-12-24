@@ -1,11 +1,11 @@
 import React from "react";
-import { Container } from "../index";
-import { MyVideos } from "../index";
+import { MyVideos, FloatingActionButton, Container } from "../index";
 
 function MyContent() {
   return (
     <Container>
       <MyVideos />
+      <FloatingActionButton />
     </Container>
   );
 }

@@ -17,6 +17,7 @@ import {
   EditProfile,
   Logout,
   ChangePassword,
+  PlayVIdeo,
 } from "./index.js";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react"; // Import PersistGate
@@ -29,7 +30,7 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <PlayVIdeo />,
       },
       {
         path: "/watch-history",

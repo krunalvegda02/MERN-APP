@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Container} from "../index";
+import {Container, FloatingActionButton} from "../index";
 import HorizontalVideoContainer from "../Components/HorizontalVideoContainer";
 import axios from "axios";
 
@@ -37,6 +37,7 @@ function LikedVideos() {
           No Likes Found
         </p>
       )}
+      <FloatingActionButton />
     </Container>
   );
 }

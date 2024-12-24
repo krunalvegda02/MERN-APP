@@ -37,6 +37,7 @@ function Home() {
             })
           : "No Videos"}
       </div>
+      <FloatingActionButton />
     </Container>
   );
 }
