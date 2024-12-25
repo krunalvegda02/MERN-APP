@@ -11,8 +11,8 @@ function NavbarUserDetails() {
   return (
     <div className="flex">
       <div className="flex-col text-white mr-3">
-        <p className="text-base">{username}</p>
-        <p className="text-sm text-right text-gray-400">{fullname}</p>
+        <p className="text-sm text-right ">{fullname}</p>
+        <p className="text-base text-right text-gray-400">@{username}</p>
       </div>
       <Link to="/settings">
         <Avatar src={avatar} h={45} w={45} />

@@ -3,16 +3,15 @@ import { setLogOut } from "../../redux/Current user data/userSlice";
 import { Container } from "../../index";
 import { useDispatch } from "react-redux";
 import { Button, message, Modal } from "antd";
-import { useNavigate } from "react-router-dom"; 
-import axios from "axios" 
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Logout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
-   
     navigate("/login");
-    
+
     axios
       .post("/api/v1/users/logout")
       .then((res) => {
@@ -21,7 +20,7 @@ function Logout() {
         navigate("/login");
       })
       .catch((err) => {
-        err.status == 401
+        err.status == 401;
         message.error("Failed to Log out");
       });
   };

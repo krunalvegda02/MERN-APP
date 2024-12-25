@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
 import { useParams, Link } from "react-router-dom";
-import { Container, UserCard } from "../index";
+import { Container, UserCard, Loading } from "../index";
 import {
   LikeOutlined,
   LikeFilled,
@@ -36,7 +36,6 @@ function PlayVIdeo() {
       .catch((error) => console.log("Error fetching videos", error));
   }, []);
 
- 
   // useEffect(() => {
   //   if (videoData) {
   //     console.log("Updated videoData:", videoData);
@@ -56,7 +55,11 @@ function PlayVIdeo() {
   };
 
   if (!videoData) {
-    return <div className="text-white text-5xl">Loading</div>;
+    return (
+      <Container>
+        <Loading  className={"mt-36 ml-40"}/>
+      </Container>
+    );
   }
 
   return (

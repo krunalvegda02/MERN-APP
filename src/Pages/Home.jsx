@@ -2,21 +2,31 @@ import React, { useState, useEffect } from "react";
 import { Container } from "../index";
 import { VideoContainer } from "../index";
 import axios from "axios";
-import { FloatingActionButton } from "../index";
+import { FloatingActionButton, Loading } from "../index";
 
 function Home() {
+  const [loading, setLoading] = useState(false);
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get("/api/v1/videos/")
       .then((res) => {
         console.log("API Response:", res.data);
+        setLoading(false);
         setVideos(res.data.data.videos);
       })
-      .catch((error) => console.log("Error fetching videos", error));
+      .catch((error) => {
+        console.log("Error fetching videos", error);
+        setLoading(false);
+      });
   }, []);
-  console.log("set VIdeos:", videos);
+  // console.log("set VIdeos:", videos);
+
+  if (loading) {
+    <Loading />;
+  }
   return (
     <Container>
       <div className="flex flex-wrap my-2 ">

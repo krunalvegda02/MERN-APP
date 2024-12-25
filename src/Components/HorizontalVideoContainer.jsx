@@ -8,7 +8,7 @@ function HorizontalVideoContainer({
   createdAt,
   views,
   owner,
-  description,
+  description
 }) {
   return (
     <div className="flex items-start gap-4 px-3 pt-4  shadow-lg">

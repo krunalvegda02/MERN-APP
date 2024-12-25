@@ -37,6 +37,8 @@ import EditProfile from "./Pages/Settings/EditProfile";
 import ChangePassword from "./Pages/Settings/ChangePassword";
 import Logout from "./Pages/Settings/Logout";
 
+import Loading from "./Components/Loading/Loading";
+
 export {
   History,
   Home,
@@ -68,5 +70,6 @@ export {
   ChangePassword,
   Logout,
   PlayVIdeo,
-  SubscribeBtn
+  SubscribeBtn,
+  Loading,
 };
