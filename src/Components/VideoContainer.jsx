@@ -9,6 +9,7 @@ function VideoContainer({
   createdAt,
   views,
   owner,
+  avatar
 }) {
   const navigate = useNavigate();
   const playVideo = () => {
@@ -27,7 +28,7 @@ function VideoContainer({
       </div>
       <div className="flex">
         <div className="mt-2 mr-2">
-          <Avatar w={30} h={30} />
+          <Avatar w={30} h={30} src={avatar} />
         </div>
         <div className="mt-2">
           {/* Title */}

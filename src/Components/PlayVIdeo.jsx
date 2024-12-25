@@ -76,7 +76,7 @@ function PlayVIdeo() {
             height={"calc(100vh - 153px)"}
           />
           <div className="text-lg text-white text-left p-2 pb-0 align-middle">
-            <p className="text-2xl font-semibold ">{videoData.description}</p>
+            <p className="text-2xl font-semibold ml-2">{videoData.description}</p>
             <div className="flex  justify-between ">
               <div className="flex">
                 <UserCard username={userData.username} />
