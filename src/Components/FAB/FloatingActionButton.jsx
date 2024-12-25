@@ -18,7 +18,9 @@ function FloatingActionButton() {
       {/* Floating Action Button */}
       <Fab
         aria-label="add"
-        onClick={handleOpenModal}
+        onClick={handleOpenModal
+          
+        }
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         style={{

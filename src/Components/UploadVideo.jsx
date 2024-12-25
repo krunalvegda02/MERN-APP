@@ -2,10 +2,52 @@ import React, { useState } from "react";
 import { Button, Modal, Upload, Form, message } from "antd";
 import { UploadOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { Container, Loading } from "../index";
 
-function UploadVideo({ isOpen, onClose }) {
+function UploadVideo({
+  isOpen,
+  onClose,
+  isEditVideo = false,
+  editVideoId = null,
+}) {
+  // console.log("isEditVideo", isEditVideo);
+  // console.log("editVideoId", editVideoId);
+
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
+
+  const handleEdit = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        const formData = new FormData();
+        if (values.thumbnail)
+          formData.append("thumbnail", values.thumbnail.file);
+        console.log("values", values);
+
+        formData.append("title", values.title);
+        formData.append("description", values.description);
+
+        setLoading(true);
+        axios
+          .patch(`/api/v1/videos/${editVideoId}`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+          .then(() => {
+            message.success("Video Updated successfully!");
+            onClose();
+            form.resetFields();
+          })
+          .catch((error) => {
+            console.error("Upload Error:", error);
+            message.error("Video update failed. Please try again.");
+          })
+          .finally(() => setLoading(false));
+      })
+      .catch(() => {
+        message.error("Please fill all required fields before uploading!");
+      });
+  };
 
   const handleUpload = () => {
     form
@@ -32,8 +74,8 @@ function UploadVideo({ isOpen, onClose }) {
             form.resetFields();
           })
           .catch((error) => {
-            console.error("Upload Error:", error);
-            message.error("File upload failed. Please try again.");
+            message.error("Upload Error:", error);
+            // message.error("File upload failed. Please try again.");
           })
           .finally(() => setLoading(false));
       })
@@ -41,6 +83,10 @@ function UploadVideo({ isOpen, onClose }) {
         message.error("Please fill all required fields before uploading!");
       });
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -59,51 +105,57 @@ function UploadVideo({ isOpen, onClose }) {
         <header className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold text-white">Upload Video</h2>
           <Button
-            onClick={handleUpload}
+            onClick={isEditVideo ? handleEdit : handleUpload}
             loading={loading}
             disabled={loading}
             style={{
               backgroundColor: "rgb(167 139 250 / var(--tw-bg-opacity, 1))",
             }}
           >
-            Save
+            {!isEditVideo ? "Save" : "Edit"}
           </Button>
         </header>
 
         <Form form={form} layout="vertical">
-          <Form.Item
-            name="videoFile"
-            rules={[{ required: true, message: "Please upload a video file!" }]}
-          >
-            <div className="h-64">
-              <Upload.Dragger
-                name="videoFile"
-                multiple={false}
-                accept="video/*"
-                maxCount={1}
-                beforeUpload={() => false}
-                onChange={(videoFile) => {
-                  form.setFieldsValue({ videoFile: videoFile });
-                }}
-              >
-                <CloudUploadOutlined className="text-5xl text-gray-400" />
-                <p className="text-2xl text-white mt-5">
-                  Drag and drop video files to Upload
-                </p>
-                <p className="text-gray-500 mt-2">
-                  Your videos will be private until you publish them
-                </p>
-                <Button icon={<UploadOutlined />} className="mt-4">
-                  Select File
-                </Button>
-              </Upload.Dragger>
-            </div>
-          </Form.Item>
+          {!isEditVideo && (
+            <Form.Item
+              name="videoFile"
+              rules={[
+                { required: true, message: "Please upload a video file!" },
+              ]}
+            >
+              <div className="h-64">
+                <Upload.Dragger
+                  name="videoFile"
+                  multiple={false}
+                  accept="video/*"
+                  maxCount={1}
+                  beforeUpload={() => false}
+                  onChange={(videoFile) => {
+                    form.setFieldsValue({ videoFile: videoFile });
+                  }}
+                >
+                  <CloudUploadOutlined className="text-5xl text-gray-400" />
+                  <p className="text-2xl text-white mt-5">
+                    Drag and drop video files to Upload
+                  </p>
+                  <p className="text-gray-500 mt-2">
+                    Your videos will be private until you publish them
+                  </p>
+                  <Button icon={<UploadOutlined />} className="mt-4">
+                    Select File
+                  </Button>
+                </Upload.Dragger>
+              </div>
+            </Form.Item>
+          )}
 
           <Form.Item
             name="thumbnail"
             label={<span className="text-base text-white">Thumbnail</span>}
-            rules={[{ required: true, message: "Please upload a thumbnail!" }]}
+            rules={[
+              { required: !isEditVideo, message: "Please upload a thumbnail!" },
+            ]}
           >
             <Upload
               name="thumbnail"
@@ -119,7 +171,9 @@ function UploadVideo({ isOpen, onClose }) {
           <Form.Item
             name="title"
             label={<span className="text-base text-white">Title</span>}
-            rules={[{ required: true, message: "Please provide a title!" }]}
+            rules={[
+              { required: !isEditVideo, message: "Please provide a title!" },
+            ]}
           >
             <input
               placeholder="Enter video title"
@@ -131,7 +185,10 @@ function UploadVideo({ isOpen, onClose }) {
             name="description"
             label={<span className="text-base text-white">Description</span>}
             rules={[
-              { required: true, message: "Please provide a description!" },
+              {
+                required: !isEditVideo,
+                message: "Please provide a description!",
+              },
             ]}
           >
             <textarea

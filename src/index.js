@@ -36,6 +36,7 @@ import ProfileFollowing from "./Components/profile-components/ProfileFollowing";
 import EditProfile from "./Pages/Settings/EditProfile";
 import ChangePassword from "./Pages/Settings/ChangePassword";
 import Logout from "./Pages/Settings/Logout";
+import UploadVideo from "./Components/UploadVideo"
 
 import Loading from "./Components/Loading/Loading";
 
@@ -72,4 +73,5 @@ export {
   PlayVIdeo,
   SubscribeBtn,
   Loading,
+  UploadVideo,
 };

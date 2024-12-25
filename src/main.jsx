@@ -21,6 +21,7 @@ import {
 } from "./index.js";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react"; // Import PersistGate
+import UploadVideo from "./Components/UploadVideo.jsx";
 
 // Router configuration
 const Router = createBrowserRouter([
@@ -80,6 +81,10 @@ const Router = createBrowserRouter([
         path: "/play-video/:id",
         element: <PlayVIdeo />,
       },
+      {
+        path: "/upload-video",
+        element: <UploadVideo />
+      }
     ],
   },
 ]);
