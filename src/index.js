@@ -32,6 +32,8 @@ import ProfileTweets from "./Components/profile-components/ProfileTweets";
 import ProfilePlaylist from "./Components/profile-components/ProfilePlaylist";
 import ProfileFollowing from "./Components/profile-components/ProfileFollowing";
 
+import AddPlaylistModal from "./Components/AddPlaylistModal";
+
 //Setting Pages
 import EditProfile from "./Pages/Settings/EditProfile";
 import ChangePassword from "./Pages/Settings/ChangePassword";
@@ -74,4 +76,5 @@ export {
   SubscribeBtn,
   Loading,
   UploadVideo,
+  AddPlaylistModal,
 };

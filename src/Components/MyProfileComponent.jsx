@@ -106,9 +106,9 @@ function MyProfileComponent({ isChannel = false, username = null }) {
 
       {/* Page Content */}
       <div className="mt-2 mr-3">
-        {pageState === 1 && <ProfileVideos isChannel={isChannel} />}
-        {pageState === 2 && <ProfilePlaylist isChannel={isChannel} />}
-        {pageState === 3 && <ProfileTweets isChannel={isChannel} />}
+        {pageState === 1 && <ProfileVideos isChannel={isChannel}  channelId={userId} />}
+        {pageState === 2 && <ProfilePlaylist isChannel={isChannel} channelId={userId} />}
+        {pageState === 3 && <ProfileTweets isChannel={isChannel} channelId={userId} />}
         {pageState === 4 && (
           <ProfileFollowing isChannel={isChannel} channelId={userId} />
         )}

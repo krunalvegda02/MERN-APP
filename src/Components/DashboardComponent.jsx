@@ -7,7 +7,7 @@ import {
   UserAddOutlined,
   HeartTwoTone,
 } from "@ant-design/icons";
-import { Switch, message } from "antd";
+import { Switch, message, Modal } from "antd";
 import { Avatar, Loading, Container, UploadVideo } from "../index";
 import axios from "axios";
 
@@ -22,21 +22,30 @@ function DashboardComponent() {
 
   const DeleteVideo = (i) => {
     setloading(true);
-    axios
-      .delete(`/api/v1/videos/${i._id}`)
-      .then(() => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this Video?",
+      onOk: () => {
+        axios
+          .delete(`/api/v1/videos/${i._id}`)
+          .then(() => {
+            setloading(false);
+            message.success("Video Deleted Successfully");
+          })
+          .catch((err) => {
+            message.error("Error deleting Video");
+            console.log("DELETE ERR:", err);
+            setloading(false);
+          });
+      },
+      onCancel: () => {
         setloading(false);
-        message.success("Video Deleted Successfully");
-      })
-      .catch((err) => {
-        message.error("Error deleting Video");
-        console.log("DELETE ERR:", err);
-        setloading(false);
-      });
+        message.info("Video deletion canceled.");
+      },
+    });
   };
 
   const EditVideo = (i) => {
-    setEditVideoId(i._id); // Pass the video ID or entire video object if needed
+    setEditVideoId(i._id);
     setIsEditModalOpen(true);
   };
 
@@ -110,7 +119,10 @@ function DashboardComponent() {
       <div className="text-white text-start">
         <div className="flex justify-between">
           <div>
-            <p className="text-4xl font-serif"> Hello, {statData.userdata.fullname}</p>
+            <p className="text-4xl font-serif">
+              {" "}
+              Hello, {statData.userdata.fullname}
+            </p>
             <p className="text-sm text-gray-500">
               Track, Manage and Analys your Viewers
             </p>

@@ -177,7 +177,7 @@ function UploadVideo({
           >
             <input
               placeholder="Enter video title"
-              className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600"
+              className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600" 
             />
           </Form.Item>
 

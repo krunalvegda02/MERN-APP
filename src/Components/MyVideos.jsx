@@ -11,7 +11,7 @@ function MyVideos() {
     axios
       .get(`/api/v1/videos/my-content`)
       .then((res) => {
-        console.log("MYVIDEOS API Response:", res.data.data);
+        // console.log("MYVIDEOS API Response:", res.data.data);
         setVideos(res.data.data.myVideos);
         setLoading(false);
       })
@@ -20,7 +20,7 @@ function MyVideos() {
         console.log("Error fetching videos", error);
       });
   }, [loading]);
-  console.log("set MYVIdeos:", videos);
+  // console.log("set MYVIdeos:", videos);
 
   if (loading) {
     return (
