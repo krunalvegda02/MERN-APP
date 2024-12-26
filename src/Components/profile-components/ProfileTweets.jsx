@@ -1,33 +1,70 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Container, Loading } from "../../index";
+import { Avatar, Loading } from "../../index";
 import { useSelector } from "react-redux";
-import { LikeOutlined, DislikeOutlined } from "@ant-design/icons";
-import { message } from "antd";
-import axios, { all } from "axios";
-// import { Input } from "antd";
+import {
+  LikeOutlined,
+  DislikeOutlined,
+  MoreOutlined,
+  DeleteFilled,
+  EditFilled,
+} from "@ant-design/icons";
+import { message, Modal } from "antd";
+import axios from "axios";
 
 function ProfileTweets({ isChannel, userid }) {
   const userId = userid || useSelector((state) => state.userData._id);
   const [formTweet, setFormTweet] = useState(null);
   const [alltweets, setallTweets] = useState(null);
 
+  const editTweet = (tweet) => {
+    let edit = prompt("Enter a tweet to update", tweet.content);
+
+    if (edit) {
+      // console.log("edit", edit);
+      axios
+        .patch(`/api/v1/tweets/${tweet._id}`, { newContent: edit })
+        .then((res) => {
+          // console.log("Edit response:", res);
+          message.success("Tweet Updated succesfully");
+          getAlltweets();
+        })
+        .catch((err) => {
+          console.log("Updating error:", err);
+          message.error("Error updating tweet:", err);
+        });
+    }
+  };
+
+  const deleteTweet = (tweet) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this tweet?",
+      onOk: () => {
+        axios
+          .delete(`/api/v1/tweets/${tweet._id}`)
+          .then(() => {
+            message.success("Tweet deleted successfully!");
+            getAlltweets();
+          })
+          .catch((err) => {
+            console.error("Error deleting tweet:", err);
+            message.error("Failed to delete tweet!");
+          });
+      },
+      onCancel: () => {
+        message.info("Tweet deletion canceled.");
+      },
+    });
+  };
+
   useEffect(() => {
-    axios
-      .get(`api/v1/tweets/user/${userid}`)
-      .then((res) => {
-        console.log("res", res.data.data);
-        setallTweets(res.data.data);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
+    getAlltweets();
   }, []);
 
   const getAlltweets = () => {
     axios
       .get(`api/v1/tweets/user/${userid}`)
       .then((res) => {
-        console.log("res", res.data.data);
+        // console.log("res", res.data.data);
         setallTweets(res.data.data);
       })
       .catch((err) => {
@@ -47,7 +84,7 @@ function ProfileTweets({ isChannel, userid }) {
         setFormTweet("");
         getAlltweets();
       })
-      .catch((err) => {
+      .catch(() => {
         message.error("Failed to post tweet!");
       });
   };
@@ -78,19 +115,31 @@ function ProfileTweets({ isChannel, userid }) {
         {alltweets.map((tweet) => {
           return (
             <div className="flex ml-2 mt-3 " key={tweet._id}>
-              <Avatar h={50} w={50} src={tweet.ownerDetails.avatar} />
-              <div className="flex-col text-white pl-3 text-left">
-                <div className="flex items-center">
-                  <p className="text-sm text-gray-400 ">
-                    {tweet.ownerDetails.username}
-                  </p>
+              <div className="flex ">
+                <Avatar h={50} w={50} src={tweet.ownerDetails.avatar} />
+                <div className="flex-col text-white pl-3 text-left">
+                  <div className="flex items-center">
+                    <p className="text-sm text-gray-400 ">
+                      {tweet.ownerDetails.username}
+                    </p>
+                  </div>
+                  <p className="text-base">{tweet.content}</p>
+                  <div className="mt-1 text-sm text-gray-300">
+                    <LikeOutlined className="pr-1" />
+                    {"344"}
+                    <DislikeOutlined className="pr-1 pl-2" />
+                    {"344"}
+                  </div>
                 </div>
-                <p className="text-base">{tweet.content}</p>
-                <div className="mt-1 text-sm text-gray-300">
-                  <LikeOutlined className="pr-1" />
-                  {"344"}
-                  <DislikeOutlined className="pr-1 pl-2" />
-                  {"344"}
+                <div className="absolute right-5">
+                  <EditFilled
+                    className="text-2xl text-green-500 mr-2"
+                    onClick={() => editTweet(tweet)}
+                  />
+                  <DeleteFilled
+                    className="text-2xl text-red-500 mr-1"
+                    onClick={() => deleteTweet(tweet)}
+                  />
                 </div>
               </div>
             </div>
