@@ -1,27 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { VideoContainer, Container } from "../index";
+import { VideoContainer, UploadVideo, Container, Loading } from "../index";
 import axios from "axios";
 import { PlusOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 
 function MyVideos() {
   const [videos, setVideos] = useState([]);
-  const navigate = useNavigate();
-  const playVideo = (id) => {
-    navigate(`/play-video/${id}`);
-  };
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     axios
       .get(`/api/v1/videos/my-content`)
       .then((res) => {
         console.log("MYVIDEOS API Response:", res.data.data);
-        setVideos(res.data.data);
+        setVideos(res.data.data.myVideos);
+        setLoading(false);
       })
-      .catch((error) => console.log("Error fetching videos", error));
-  }, []);
+      .catch((error) => {
+        setLoading(false);
+        console.log("Error fetching videos", error);
+      });
+  }, [loading]);
   console.log("set MYVIdeos:", videos);
 
-  if (!videos) {
+  if (loading) {
+    return (
+      <Container>
+        <Loading />
+      </Container>
+    );
+  }
+
+  if (videos.length === 0) {
     return (
       <>
         <PlusOutlined
@@ -36,25 +45,22 @@ function MyVideos() {
 
   return (
     <div className="flex flex-wrap">
-      {videos.length > 0
-        ? videos.map((video) => {
-            return (
-              <div className="w-full" onClick={() => playVideo(video._id)}>
-                <VideoContainer
-                  key={video._id}
-                  title={video.title}
-                  thumbnail={video.thumbnail}
-                  views={video.views || 0}
-                  createdAt={video.createdAt}
-                  description={video.description}
-                  src={video.video}
-                  owner={video.owner}
-                  
-                />
-              </div>
-            );
-          })
-        : "No Videos"}
+      {videos.length > 0 &&
+        videos.map((video) => {
+          return (
+            <VideoContainer
+              key={video._id}
+              videoId={video._id}
+              title={video.title}
+              thumbnail={video.thumbnail}
+              views={video.views || 0}
+              createdAt={video.createdAt}
+              description={video.description}
+              src={video.video}
+              owner={video.owner}
+            />
+          );
+        })}
     </div>
   );
 }

@@ -1,12 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { UserCard } from "../../index";
+import axios from "axios";
 
-function ProfileFollowing({ isChannel}) {
+function ProfileFollowing({ isChannel, channelId }) {
+  
+  console.log("ChannelId:", channelId);
+  
+  const [followingList, setFollowingList] = useState();
+
+  useEffect(() => {
+    axios
+      .get(`/api/v1/subscriptions/u/${channelId}`)
+      .then((res) => {
+        console.log("following list:", res.data);
+      })
+      .catch((err) => {
+        console.log("ChannelId:", channelId);
+        console.log("Following list ERR:".err);
+      });
+  }, []);
+
   return (
     <div>
-      <UserCard />
+      {/* <UserCard  /> */}
     </div>
-  )
+  );
 }
 
-export default ProfileFollowing
+export default ProfileFollowing;

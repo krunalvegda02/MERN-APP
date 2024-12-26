@@ -20,6 +20,21 @@ function DashboardComponent() {
   const [videoData, setvideoData] = useState(null);
   const [loading, setloading] = useState(false);
 
+  const DeleteVideo = (i) => {
+    setloading(true);
+    axios
+      .delete(`/api/v1/videos/${i._id}`)
+      .then(() => {
+        setloading(false);
+        message.success("Video Deleted Successfully");
+      })
+      .catch((err) => {
+        message.error("Error deleting Video");
+        console.log("DELETE ERR:", err);
+        setloading(false);
+      });
+  };
+
   const EditVideo = (i) => {
     setEditVideoId(i._id); // Pass the video ID or entire video object if needed
     setIsEditModalOpen(true);
@@ -81,13 +96,21 @@ function DashboardComponent() {
     );
   }
 
+  if (loading) {
+    return (
+      <Container>
+        <Loading />
+      </Container>
+    );
+  }
+
   return (
     <div className="p-10">
       {/* Introduction */}
       <div className="text-white text-start">
         <div className="flex justify-between">
           <div>
-            <p className="text-4xl font-serif"> Hello, {"Krunal Vegda"}</p>
+            <p className="text-4xl font-serif"> Hello, {statData.userdata.fullname}</p>
             <p className="text-sm text-gray-500">
               Track, Manage and Analys your Viewers
             </p>
@@ -181,9 +204,9 @@ function DashboardComponent() {
                 </div>
                 <div className="ml-7 text-start">
                   <div className="flex ">
-                    <Avatar h={30} w={30} src={""} />
+                    <Avatar h={30} w={30} src={i.thumbnail} />
                     <p className="truncate max-w-[150px] ml-1 items-center flex">
-                      {i.owner}
+                      {i.title}
                     </p>
                   </div>
                 </div>

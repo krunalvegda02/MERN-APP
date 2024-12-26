@@ -4,18 +4,21 @@ import { PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 export default function SubscribeBtn({ isSubscribed, channelId }) {
-  const [subscribeBtnClick, setSubscribeBtnClick] = useState(isSubscribed);
+  console.log("isSubscribed", isSubscribed);
+
+  const [subscribeBtnClick, setSubscribeBtnClick] = useState(0);
 
   useEffect(() => {
     axios
       .post(`/api/v1/subscriptions/c/${channelId}`)
       .then((res) => {
+        setSubscribeBtnClick(1)
         console.log("API RES:", res);
       })
       .catch((err) => {
         console.log("API ERR:", err);
       });
-  }, [subscribeBtnClick]);
+  }, []);
 
   const toggleSubscriber = () => {
     setSubscribeBtnClick(!isSubscribed);

@@ -14,7 +14,7 @@ function NavbarUserDetails() {
         <p className="text-sm text-right ">{fullname}</p>
         <p className="text-base text-right text-gray-400">@{username}</p>
       </div>
-      <Link to="/settings">
+      <Link to="/edit-profile">
         <Avatar src={avatar} h={45} w={45} />
       </Link>
     </div>

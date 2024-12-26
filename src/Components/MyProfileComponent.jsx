@@ -11,15 +11,17 @@ import { EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { message } from "antd";
 
-function MyProfileComponent({ isChannel = false }) {
+function MyProfileComponent({ isChannel = false, username = null }) {
   const userdata = useSelector((state) => state.userData);
   const [pageState, setPageState] = useState(1);
   const [channeldata, setChanneldata] = useState(null);
+  const [userId, setUserId] = useState(userdata._id);
+  console.log("userId", userId);
 
   useEffect(() => {
     if (isChannel) {
       axios
-        .get(`/api/v1/c/:username`)
+        .get(`/api/v1/c/${username}`)
         .then((res) => {
           setChanneldata(res.data.data);
         })
@@ -68,7 +70,7 @@ function MyProfileComponent({ isChannel = false }) {
           <div className="flex justify-center bg-violet-400 mt-12 mr-3 h-9 pt-1 w-20 rounded-md hover:bg-violet-500 hover:border duration-300">
             <EditOutlined />
             <p className="pl-2 font-medium text-lg">
-              {isChannel ? "Subscribe" : "Edit" }
+              {isChannel ? "Subscribe" : "Edit"}
             </p>
           </div>
         </Link>
@@ -107,7 +109,9 @@ function MyProfileComponent({ isChannel = false }) {
         {pageState === 1 && <ProfileVideos isChannel={isChannel} />}
         {pageState === 2 && <ProfilePlaylist isChannel={isChannel} />}
         {pageState === 3 && <ProfileTweets isChannel={isChannel} />}
-        {pageState === 4 && <ProfileFollowing isChannel={isChannel} />}
+        {pageState === 4 && (
+          <ProfileFollowing isChannel={isChannel} channelId={userId} />
+        )}
       </div>
     </div>
   );
