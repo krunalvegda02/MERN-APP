@@ -18,6 +18,7 @@ import {
   Logout,
   ChangePassword,
   PlayVIdeo,
+  PlaylistPage,
 } from "./index.js";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react"; // Import PersistGate
@@ -83,8 +84,12 @@ const Router = createBrowserRouter([
       },
       {
         path: "/upload-video",
-        element: <UploadVideo />
-      }
+        element: <UploadVideo />,
+      },
+      {
+        path: "/playlist/:id",
+        element: <PlaylistPage />,
+      },
     ],
   },
 ]);

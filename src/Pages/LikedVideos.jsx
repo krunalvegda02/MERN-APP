@@ -59,6 +59,7 @@ function LikedVideos() {
           likedVideos.map((likevideo) => (
             <div onClick={() => playVideo(likevideo.video._id)}>
               <HorizontalVideoContainer
+                id={likevideo.video._id}
                 key={likevideo.video._id}
                 src={likevideo.video.src}
                 createdAt={likevideo.video.createdAt}

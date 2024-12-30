@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { AddPlaylistModal, Container, Loading } from "../../index";
+import { AddPlaylistModal, Loading } from "../../index";
 import axios from "axios";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined, MoreOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 function ProfilePlaylist({ isChannel, channelId }) {
   const [playList, setPlaylist] = useState(null);
@@ -17,7 +18,7 @@ function ProfilePlaylist({ isChannel, channelId }) {
       .catch((err) => {
         console.log("Playlist err:", err);
       });
-  }, [onClose]);
+  }, []);
 
   const createPlaylist = () => {
     setmodal(true);
@@ -47,14 +48,16 @@ function ProfilePlaylist({ isChannel, channelId }) {
           playList.map((i) => (
             <div className="w-[32.60%] h-[250px]" key={i._id}>
               <div className=" relative">
-                <img
-                  src={
-                    "https://limitlessneurolab.com/wp-content/uploads/2024/03/bg-blur-tailwind-1024x585.png" ||
-                    i.videos[0].thumbnail
-                  }
-                  alt="PlayListimage"
-                  className="h-48 "
-                />
+                <Link to={`/playlist/${i._id}`}>
+                  <img
+                    src={
+                      "https://limitlessneurolab.com/wp-content/uploads/2024/03/bg-blur-tailwind-1024x585.png" ||
+                      i.videos[0].thumbnail
+                    }
+                    alt="PlayListimage"
+                    className="h-48 "
+                  />
+                </Link>
                 <div className="flex justify-between  px-4  absolute bottom-0 backdrop-blur w-full h-14">
                   <div className=" text-white text-left  text-sm pt-2">
                     <p>PLaylist</p>
@@ -69,9 +72,12 @@ function ProfilePlaylist({ isChannel, channelId }) {
                 </div>
               </div>
               {/* description */}
-              <div className=" text-left p-1 px-4 text-white">
-                <p className=" text-lg">{i.name}</p>
-                <p className="text-xs text-gray-500">{i.description}</p>
+              <div className="flex justify-between text-left p-1 px-4 text-white">
+                <div>
+                  <p className=" text-lg">{i.name}</p>
+                  <p className="text-xs text-gray-500">{i.description}</p>
+                </div>
+                <MoreOutlined className="text-lg" />
               </div>
             </div>
           ))}

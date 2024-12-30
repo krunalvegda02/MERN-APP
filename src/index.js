@@ -39,6 +39,7 @@ import EditProfile from "./Pages/Settings/EditProfile";
 import ChangePassword from "./Pages/Settings/ChangePassword";
 import Logout from "./Pages/Settings/Logout";
 import UploadVideo from "./Components/UploadVideo";
+import PlaylistPage from "./Components/PlaylistPage";
 
 import Loading from "./Components/Loading/Loading";
 
@@ -77,4 +78,5 @@ export {
   Loading,
   UploadVideo,
   AddPlaylistModal,
+  PlaylistPage,
 };
