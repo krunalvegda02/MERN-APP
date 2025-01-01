@@ -18,20 +18,17 @@ import moment from "moment";
 function PlayVIdeo() {
   const videoId = useParams();
   console.log("Video id", videoId);
-
-  const [profileOpen, setProfileOpen] = useState();
-
   const [formComment, setFormComment] = useState(null);
   const [comment, setCommentData] = useState();
   const [userData, setuserData] = useState();
   const [videoData, setVideoData] = useState();
 
+  // const [cmntLikes, setCmntLikes] = useState();
   const [likes, setLikes] = useState(0);
-  const [dislikes, setDislikes] = useState(20);
-  const [liked, setLiked] = useState(false);
-  const [disliked, setDisliked] = useState(false);
+  const [liked, setLiked] = useState();
 
   const userAvatar = useSelector((state) => state.userData.avatar);
+  const currentUserId = useSelector((state) => state.userData._id);
 
   //? Edit Comment
   const editCmnt = (cmnt) => {
@@ -108,18 +105,75 @@ function PlayVIdeo() {
       .catch((error) => console.log("Error fetching Comments", error));
   };
 
+  //? get number of total likes
   const getLikes = () => {
     axios
-      .get(`/api/v1/likes/v/${videoId.id}`)
+      .get(`/api/v1/likes/toggle/v/${videoId.id}`)
       .then((res) => {
         // console.log("res", res.data.data);
+
+        //setting likes arary
         setLikes(res.data.data);
+
+        const { likedBy } = res.data.data;
+        const userLiked = likedBy.includes(currentUserId);
+        setLiked(userLiked);
       })
       .catch((err) => {
         console.log("error in Likes", err);
       });
   };
- 
+
+  //? video Like toggle
+  const toggleLike = () => {
+    axios
+      .post(`/api/v1/likes/toggle/v/${videoId.id}`)
+      .then((res) => {
+        const { likedBy } = res.data.data;
+        const totalLikes = likedBy.length;
+        setLikes(totalLikes);
+        //for setting like color
+
+        const userLiked = likedBy.includes(currentUserId);
+        setLiked(userLiked);
+        message.success(
+          userLiked ? "You liked this video!" : "You unliked this video."
+        );
+      })
+      .catch((err) => {
+        message.error("Error during like");
+      });
+  };
+
+  //?Comment toggle
+  const toggleCmnt = (cmntId) => {
+    axios
+      .post(`/api/v1/likes/toggle/c/${cmntId}`)
+      .then((res) => {
+        console.log("resres", res);
+        message.success("Comment toggle succesfull");
+      })
+      .catch((err) => {
+        message.error("Error during like");
+      });
+  };
+
+  //todo: create functionality
+  // const getCommentLikes = (commentId) => {
+  //   axios
+  //     .get(`/api/v1/likes/toggle/c/${commentId}`)
+  //     .then((res) => {
+  //       console.log("res", res.data.data);
+  //       setCmntLikes(res.data.data);
+  //       // const { likedBy } = res.data.data;
+  //       // const userLiked = likedBy.includes(currentUserId);
+  //       // setLiked(userLiked);
+  //     })
+  //     .catch((err) => {
+  //       console.log("error in Likes", err);
+  //     });
+  // };
+
   //? calling getVideoById for setting video and user data in playVIdeo Container
   useEffect(() => {
     axios
@@ -134,24 +188,6 @@ function PlayVIdeo() {
       .catch((error) => console.log("Error fetching videos", error));
   }, []);
 
-  //? Like toggle
-  const toggleLike = () => {
-    axios
-      .post(`/api/v1/likes/toggle/v/${videoId.id}`)
-      .then((res) => {
-        message.success("Like war succesful");
-        console.log("API RES:", res);
-      })
-      .catch((err) => {
-        message.error("Error during like");
-      });
-  };
-
-  useEffect(() => {
-    getLikes();
-  }, [toggleLike]);
-
-  
   if (!videoData || !comment) {
     return (
       <Container>
@@ -185,7 +221,7 @@ function PlayVIdeo() {
                 onClick={toggleLike}
               >
                 {liked ? (
-                  <LikeFilled className="pr-2 text-2xl text-blue-500" />
+                  <LikeFilled className="pr-2 text-2xl text-violet-500" />
                 ) : (
                   <LikeOutlined className="pr-2 text-2xl" />
                 )}
@@ -196,8 +232,8 @@ function PlayVIdeo() {
                 className="flex items-center pl-2 cursor-pointer"
                 onClick={toggleLike}
               >
-                {disliked ? (
-                  <DislikeFilled className="pr-2 text-2xl text-red-500" />
+                {!liked ? (
+                  <DislikeFilled className="pr-2 text-2xl text-gray-500" />
                 ) : (
                   <DislikeOutlined className="pr-2 text-2xl" />
                 )}
@@ -205,6 +241,8 @@ function PlayVIdeo() {
               </div>
             </div>
           </div>
+
+          {/*COmment part */}
           <div className="border rounded-md p-2">
             <p className="text-white text-xl text-semibold ml-1 mb-1">
               {comment.length} Comments
@@ -232,33 +270,40 @@ function PlayVIdeo() {
                   <div className="flex ml-2 mt-3 " key={cmnt._id}>
                     <div className="flex ">
                       <Avatar h={35} w={35} src={cmnt.owner.avatar} />
-                      <div className="flex-col text-white pl-3 text-left">
+                      <div className="text-white pl-3 text-left">
                         <div className="flex items-center">
-                          <p className="text-xs text-gray-200 mr-2">
+                          <p className="text-sm text-gray-300 mr-2">
                             {cmnt.owner.username}
                           </p>
-                          <p className="text-[10px] text-gray-500 ">
+                          <p className="text-xs text-gray-500 ">
                             {moment(cmnt.createdAt).fromNow()}
                           </p>
                         </div>
-                        <p className="text-sm">{cmnt.content}</p>
-                        <div className="mt-1 text-xs text-gray-300">
+                        <p className="text-base">{cmnt.content}</p>
+                        <div
+                          className="mt-1 text-xs text-gray-300"
+                          onClick={() => {
+                            toggleCmnt(cmnt._id);
+                          }}
+                        >
                           <LikeOutlined className="pr-1" />
-                          {"344"}
+
                           <DislikeOutlined className="pr-1 pl-2" />
-                          {"344"}
                         </div>
                       </div>
                       <div className="absolute right-5">
-                        {/* //TODO: IF it is my commment then and then only itshould see this icons */}
-                        <EditFilled
-                          className="text-base text-green-500 mr-2"
-                          onClick={() => editCmnt(cmnt)}
-                        />
-                        <DeleteFilled
-                          className="text-base text-red-500 mr-1"
-                          onClick={() => deleteCmnt(cmnt)}
-                        />
+                        {cmnt.owner._id === currentUserId && (
+                          <div>
+                            <EditFilled
+                              className="text-base text-green-500 mr-2"
+                              onClick={() => editCmnt(cmnt)}
+                            />
+                            <DeleteFilled
+                              className="text-base text-red-500 mr-1"
+                              onClick={() => deleteCmnt(cmnt)}
+                            />
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
