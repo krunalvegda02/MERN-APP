@@ -32,6 +32,7 @@ function PlayVIdeo() {
 
   const userAvatar = useSelector((state) => state.userData.avatar);
 
+  //? Edit Comment
   const editCmnt = (cmnt) => {
     let edit = prompt("Enter a Comment to update", cmnt.content);
 
@@ -53,6 +54,7 @@ function PlayVIdeo() {
     }
   };
 
+  //? Delete Comment
   const deleteCmnt = (cmnt) => {
     Modal.confirm({
       title: "Are you sure you want to delete this Comment?",
@@ -74,19 +76,26 @@ function PlayVIdeo() {
     });
   };
 
+  //? Add Comment
   const addComment = (formComment) => {
+    if (!formComment.trim()) {
+      message.warning("Comment cannot be empty!");
+      return;
+    }
+
     axios
-      .post(`/api/v1/comments/${videoId.id}`, formComment)
-      .then((res) => {
+      .post(`/api/v1/comments/${videoId.id}`, { comment: formComment })
+      .then(() => {
+        getAllcomments();
         message.success("Comment Added Succesfully!");
       })
       .catch((err) => {
         console.log(err);
-
         message.error("Error Adding Comment");
       });
   };
 
+  //? All Comments fetching
   const getAllcomments = () => {
     axios
       .get(`/api/v1/comments/${videoId.id}`)
@@ -97,11 +106,12 @@ function PlayVIdeo() {
       .catch((error) => console.log("Error fetching Comments", error));
   };
 
+  //? calling getVideoById for setting video and user data in playVIdeo Container
   useEffect(() => {
     axios
       .get(`/api/v1/videos/${videoId.id}`)
       .then((res) => {
-        console.log("API Response:", res.data.data);
+        // console.log("API Response:", res.data.data);
         setVideoData(res.data.data.video);
         setuserData(res.data.data.user);
         getAllcomments();
@@ -109,6 +119,7 @@ function PlayVIdeo() {
       .catch((error) => console.log("Error fetching videos", error));
   }, []);
 
+  //? Like toggle
   const toggleLike = () => {
     axios
       .post(`/api/v1/likes/toggle/v/${videoId.id}`)
@@ -195,7 +206,7 @@ function PlayVIdeo() {
                 className="ml-2 h-7 bg-violet-500 hover:bg-red-600 text-white px-4 py-1 shadow-md text-sm rounded"
                 onClick={() => addComment(formComment)}
               >
-                Save
+                Post
               </button>
             </div>
 
@@ -220,6 +231,7 @@ function PlayVIdeo() {
                         </div>
                       </div>
                       <div className="absolute right-5">
+                        //TODO: IF it is my commment then and then only it should see this icons
                         <EditFilled
                           className="text-base text-green-500 mr-2"
                           onClick={() => editCmnt(cmnt)}
