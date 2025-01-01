@@ -26,7 +26,7 @@ function PlayVIdeo() {
   const [userData, setuserData] = useState();
   const [videoData, setVideoData] = useState();
 
-  const [likes, setLikes] = useState(10);
+  const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(20);
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
@@ -108,6 +108,18 @@ function PlayVIdeo() {
       .catch((error) => console.log("Error fetching Comments", error));
   };
 
+  const getLikes = () => {
+    axios
+      .get(`/api/v1/likes/v/${videoId.id}`)
+      .then((res) => {
+        // console.log("res", res.data.data);
+        setLikes(res.data.data);
+      })
+      .catch((err) => {
+        console.log("error in Likes", err);
+      });
+  };
+ 
   //? calling getVideoById for setting video and user data in playVIdeo Container
   useEffect(() => {
     axios
@@ -117,6 +129,7 @@ function PlayVIdeo() {
         setVideoData(res.data.data.video);
         setuserData(res.data.data.user);
         getAllcomments();
+        getLikes();
       })
       .catch((error) => console.log("Error fetching videos", error));
   }, []);
@@ -126,6 +139,7 @@ function PlayVIdeo() {
     axios
       .post(`/api/v1/likes/toggle/v/${videoId.id}`)
       .then((res) => {
+        message.success("Like war succesful");
         console.log("API RES:", res);
       })
       .catch((err) => {
@@ -133,6 +147,11 @@ function PlayVIdeo() {
       });
   };
 
+  useEffect(() => {
+    getLikes();
+  }, [toggleLike]);
+
+  
   if (!videoData || !comment) {
     return (
       <Container>
@@ -170,11 +189,11 @@ function PlayVIdeo() {
                 ) : (
                   <LikeOutlined className="pr-2 text-2xl" />
                 )}
-                <p>{likes} likes</p>
+                <p>{likes} </p>
               </div>
-              <p className="px-2 text-gray-500 pt-4">•</p>
+
               <div
-                className="flex items-center cursor-pointer"
+                className="flex items-center pl-2 cursor-pointer"
                 onClick={toggleLike}
               >
                 {disliked ? (
@@ -182,7 +201,7 @@ function PlayVIdeo() {
                 ) : (
                   <DislikeOutlined className="pr-2 text-2xl" />
                 )}
-                <p>{dislikes} dislikes</p>
+                <p></p>
               </div>
             </div>
           </div>

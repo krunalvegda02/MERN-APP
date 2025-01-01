@@ -6,18 +6,14 @@ import {
   ProfileFollowing,
   ProfilePlaylist,
   Loading,
+  SubscribeBtn,
 } from "../index";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { message } from "antd";
 import axios from "axios";
 
 function MyProfileComponent({ username, isChannel }) {
-  console.log("usrnjknfjbkjebfvkjb jksc jkb cjdsnjkdk", {
-    username,
-    isChannel,
-  });
-
   //for page menus
   const [pageState, setPageState] = useState(1);
 
@@ -29,7 +25,7 @@ function MyProfileComponent({ username, isChannel }) {
     axios
       .get(`/api/v1/users/c/${username}`)
       .then((res) => {
-        console.log("Channeldata", res.data.data);
+        // console.log("Channeldata", res.data.data);
         setChanneldata(res.data.data);
       })
       .catch((err) => {
@@ -78,14 +74,26 @@ function MyProfileComponent({ username, isChannel }) {
             </div>
           </div>
         </div>
-        <Link to="/edit-profile">
-          <div className="flex justify-center bg-violet-400 mt-12 mr-3 h-9 pt-1 w-20 rounded-md hover:bg-violet-500 hover:border duration-300">
+        {/* <Link to="/edit-profile">
+          <div className="flex justify-center bg-violet-400 mt-12 mr-3 h-8  pb-1.5 px-2 rounded-lg hover:bg-violet-500 hover:border duration-300">
             <EditOutlined />
-            <p className="pl-2 font-medium text-lg">
+            <p className="pl-2 font-medium text-lg ">
               {isChannel ? "Subscribe" : "Edit"}
             </p>
           </div>
-        </Link>
+        </Link> */}
+        {!isChannel ? (
+          <div className="flex justify-center mt-12 mr-3  h-8 px-2 border bg-violet-400  hover:bg-violet-500 hover:border duration-300">
+            <div>
+              <EditOutlined className="text-lg pt-1.5 " />
+            </div>
+            <p className="pl-2 font-medium text-lg ">Edit</p>
+          </div>
+        ) : (
+          <div className="flex justify-center mt-12 mr-3  h-8   bg-violet-400  hover:bg-violet-500 hover:border duration-300">
+           <SubscribeBtn />
+           </div>
+        )}
       </div>
 
       {/* Menu Bar */}

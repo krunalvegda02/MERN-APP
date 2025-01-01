@@ -1,10 +1,13 @@
 import React from "react";
 import { Container } from "../index";
 import { MyProfileComponent } from "../index";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 export default function MyProfile() {
-  const { username, isChannel } = useParams();
+  const { username } = useParams();
+  const location = useLocation();
+  const isChannel = location.state?.isChannel;
+
   return (
     <div>
       <Container>

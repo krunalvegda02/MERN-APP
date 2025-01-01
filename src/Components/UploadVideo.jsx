@@ -69,11 +69,13 @@ function UploadVideo({
             headers: { "Content-Type": "multipart/form-data" },
           })
           .then(() => {
+            setLoading(false);
             message.success("File uploaded successfully!");
             onClose();
             form.resetFields();
           })
           .catch((error) => {
+            setLoading(false);
             message.error("Upload Error:", error);
             // message.error("File upload failed. Please try again.");
           })

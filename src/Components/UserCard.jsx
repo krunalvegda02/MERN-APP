@@ -6,11 +6,14 @@ import { useNavigate } from "react-router-dom";
 function UserCard({ username }) {
   // console.log("username", username);
   const [channelData, setChannelData] = useState();
+
   const navigate = useNavigate();
 
   const profileOpen = () => {
     const isChannel = true;
-    navigate(`/profile/${username}/${false}`);
+    navigate(`/profile/${username}`, {
+      state: { isChannel },
+    });
   };
 
   useEffect(() => {
@@ -39,7 +42,12 @@ function UserCard({ username }) {
           <Avatar src={channelData.avatar} h={45} w={45} />
         </div>
 
-        <div className="text-left text-white">
+        <div
+          className="text-left text-white"
+          onClick={() => {
+            profileOpen();
+          }}
+        >
           <p className=" text-lg pl-2"> {channelData.username}</p>
           <div className="flex pl-2 text-gray-400 text-xs mr-7 ">
             <p>{channelData.subscriberCount} Subscribers</p>

@@ -26,6 +26,13 @@ function LeftNavBar() {
     setShowSettings(false);
   };
 
+  const profileOpen = () => {
+    const isChannel = false;
+    navigate(`/profile/${username}`, {
+      state: { isChannel },
+    });
+  };
+
   const UpperNavItems = [
     {
       itemName: "Home",
@@ -50,7 +57,7 @@ function LeftNavBar() {
     {
       itemName: "My Profile",
       itemIcon: <UserOutlined className="text-2xl px-2 text-white" />,
-      link: `/profile/${username}`, // Use onClick for navigation
+      onClick: profileOpen, // Use onClick for navigation
     },
   ];
 
