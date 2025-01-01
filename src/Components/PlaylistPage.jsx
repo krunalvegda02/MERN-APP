@@ -89,10 +89,3 @@ function PlaylistPage() {
 }
 
 export default PlaylistPage;
-
-// if (!videos)
-//     {
-//       <div>
-//         <p className="text-white text-2xl">Please Add Video in the Playlist</p>
-//       </div>
-//     }

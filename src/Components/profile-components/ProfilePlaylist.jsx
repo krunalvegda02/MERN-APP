@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { AddPlaylistModal, Loading } from "../../index";
 import axios from "axios";
-import { PlusCircleOutlined, MoreOutlined } from "@ant-design/icons";
+import {
+  PlusCircleOutlined,
+  MoreOutlined,
+  EditFilled,
+  DeleteFilled,
+} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { Popover, Modal, message } from "antd";
 
 function ProfilePlaylist({ isChannel, channelId }) {
   const [playList, setPlaylist] = useState(null);
   const [modal, setmodal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
 
-  useEffect(() => {
+  const getAllPlaylists = () => {
     axios
       .get(`/api/v1/playlist/user/${channelId}`)
       .then((res) => {
@@ -19,7 +26,7 @@ function ProfilePlaylist({ isChannel, channelId }) {
       .catch((err) => {
         console.log("Playlist err:", err);
       });
-  }, []);
+  };
 
   const createPlaylist = () => {
     setmodal(true);
@@ -28,6 +35,71 @@ function ProfilePlaylist({ isChannel, channelId }) {
   const onClose = () => {
     setmodal(false);
   };
+
+  const CloseEditModal = () => {
+    setEditModal(false);
+  };
+
+  const EditPlaylist = () => {
+    setEditModal(true);
+  };
+
+  const deletePlaylist = (playlistId) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this Playlist?",
+      onOk: () => {
+        axios
+          .delete(`/api/v1/playlist/${playlistId}`)
+          .then(() => {
+            message.success("Playlist deleted successfully!");
+            getAllPlaylists();
+          })
+          .catch((err) => {
+            console.error("Error deleting Playlist:", err);
+            message.error("Failed to delete Playlist!");
+          });
+      },
+      onCancel: () => {
+        message.info("Playlist deletion canceled.");
+      },
+    });
+  };
+
+  const content = (playlistId) => (
+    <div>
+      <div
+        onClick={() => {
+          EditPlaylist(playlistId);
+        }}
+      >
+        <p className="text-base">
+          <EditFilled />
+          Edit
+        </p>
+      </div>
+      <div
+        onClick={() => {
+          deletePlaylist(playlistId);
+        }}
+      >
+        <p className="text-base">
+          <DeleteFilled /> Delete
+        </p>
+      </div>
+      {editModal && (
+        <AddPlaylistModal
+          isOpen={editModal}
+          onClose={CloseEditModal}
+          editPlaylist={true}
+          editPlaylistid={playlistId}
+        ></AddPlaylistModal>
+      )}
+    </div>
+  );
+
+  useEffect(() => {
+    getAllPlaylists();
+  }, [EditPlaylist]);
 
   if (!playList) {
     return <Loading />;
@@ -80,11 +152,22 @@ function ProfilePlaylist({ isChannel, channelId }) {
                   <p className=" text-lg">{i.name}</p>
                   <p className="text-xs text-gray-500">{i.description}</p>
                 </div>
-                {!isChannel ? <MoreOutlined className="text-lg" /> : null}
+                {!isChannel ? (
+                  <Popover
+                    content={() => content(i._id)}
+                    trigger="click"
+                    color="#c4b5fd"
+                    placement="left"
+                    arrow=""
+                  >
+                    <MoreOutlined className="text-lg" />
+                  </Popover>
+                ) : null}
               </div>
             </div>
           ))}
       </div>
+
       {modal ? (
         <AddPlaylistModal isOpen={modal} onClose={onClose}></AddPlaylistModal>
       ) : null}

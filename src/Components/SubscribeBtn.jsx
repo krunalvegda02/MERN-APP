@@ -29,7 +29,7 @@ export default function SubscribeBtn({ isSubscribed, channelId }) {
       className={`h-8 p-2 px-1.5 border-gray-600 border text-black  text-center  ${
         !isSubscribed ? "bg-violet-400" : "bg-gray-600"
       }`}
-      onClick={toggleSubscriber}
+      onClick={() => toggleSubscriber()}
     >
       {!isSubscribed ? (
         <p className="text-base font-semibold ">

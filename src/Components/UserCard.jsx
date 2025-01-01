@@ -8,7 +8,6 @@ function UserCard({ username }) {
   const [channelData, setChannelData] = useState();
 
   const navigate = useNavigate();
-
   const profileOpen = () => {
     const isChannel = true;
     navigate(`/profile/${username}`, {
@@ -16,6 +15,7 @@ function UserCard({ username }) {
     });
   };
 
+  //getting details for card
   useEffect(() => {
     axios
       .get(`/api/v1/users/c/${username}`)

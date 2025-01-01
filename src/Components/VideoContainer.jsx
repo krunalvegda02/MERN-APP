@@ -43,7 +43,7 @@ function VideoContainer({
           <div className="flex items-center w-full text-xs text-gray-500 ">
             <div className="flex text-nowrap">{views.length} Views</div>
             <p className="px-1">•</p>
-            <div> {moment(createdAt).fromNow()}</div>
+            <div className="text-nowrap"> {moment(createdAt).fromNow()}</div>
           </div>
 
           {/* Creator Info */}
