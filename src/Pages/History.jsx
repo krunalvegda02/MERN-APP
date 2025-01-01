@@ -6,9 +6,9 @@ import { HomeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 function History() {
+  
   const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState([]);
-  console.log(history);
 
   const navigate = useNavigate();
   const playVideo = (id) => {
@@ -19,7 +19,7 @@ function History() {
     axios
       .get("/api/v1/users/history")
       .then((res) => {
-        console.log("API RESPONSE", res);
+        // console.log("API RESPONSE", res);
         setHistory(res.data.data);
         setLoading(false);
       })
@@ -57,17 +57,8 @@ function History() {
       <div>
         {history.length > 0 &&
           history.map((video) => (
-            <div onClick={() => playVideo(video.video._id)}>
-              <HorizontalVideoContainer
-                key={video.video._id}
-                src={video.video.src}
-                createdAt={video.video.createdAt}
-                owner={video.video.owner}
-                thumbnail={video.video.thumbnail}
-                title={video.video.title}
-                views={video.video.views}
-                description={video.video.description}
-              />
+            <div key={video._id} onClick={() => playVideo(video._id)}>
+              <HorizontalVideoContainer id={video._id} />
             </div>
           ))}
       </div>

@@ -3,12 +3,12 @@ import { Container } from "../index";
 import { MyProfileComponent } from "../index";
 import { useParams } from "react-router-dom";
 
-export default function MyProfile({isChannel}) {
-  const user = useParams();
+export default function MyProfile() {
+  const { username, isChannel } = useParams();
   return (
     <div>
       <Container>
-        <MyProfileComponent Username={user} isChannel={isChannel}  />
+        <MyProfileComponent username={username} isChannel={isChannel} />
       </Container>
     </div>
   );

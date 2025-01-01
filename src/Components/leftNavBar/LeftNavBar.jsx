@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Settings } from "../../index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   HomeOutlined,
   LikeOutlined,
@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 
 function LeftNavBar() {
   const [showSettings, setShowSettings] = useState(false);
-
+  const navigate = useNavigate();
   const username = useSelector((state) => state.userData.username);
 
   const handleSettingsClick = () => {
@@ -50,9 +50,10 @@ function LeftNavBar() {
     {
       itemName: "My Profile",
       itemIcon: <UserOutlined className="text-2xl px-2 text-white" />,
-      link: `/profile/${username}`,
+      link: `/profile/${username}`, // Use onClick for navigation
     },
   ];
+
   const lowerNavItems = [
     {
       itemName: "My DashBoard",
@@ -68,18 +69,24 @@ function LeftNavBar() {
   ];
 
   return (
-    <div className="fixed top-[3.5rem] left-0 h-[calc(100vh-3.5rem)] w-[235px]  border-r border-white-300">
+    <div className="fixed top-[3.5rem] left-0 h-[calc(100vh-3.5rem)] w-[235px] border-r border-white-300">
       {/* Upper Section */}
       <div className="pt-2">
-        {UpperNavItems.map((item) => (
-          <Link to={item.link} key={item.itemName}>
-            <LeftNavbarItemBox
+        {UpperNavItems.map((item) =>
+          item.onClick ? (
+            <div
               key={item.itemName}
-              name={item.itemName}
-              icon={item.itemIcon}
-            />
-          </Link>
-        ))}
+              onClick={item.onClick}
+              className="cursor-pointer"
+            >
+              <LeftNavbarItemBox name={item.itemName} icon={item.itemIcon} />
+            </div>
+          ) : (
+            <Link to={item.link} key={item.itemName}>
+              <LeftNavbarItemBox name={item.itemName} icon={item.itemIcon} />
+            </Link>
+          )
+        )}
       </div>
 
       {/* Lower Section */}

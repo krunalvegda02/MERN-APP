@@ -10,10 +10,12 @@ import {
 } from "@ant-design/icons";
 import { message, Modal } from "antd";
 import axios from "axios";
-import moment from "moment"
+import moment from "moment";
 
-function ProfileTweets({ isChannel, userid }) {
-  const userId = userid || useSelector((state) => state.userData._id);
+function ProfileTweets({ isChannel, channelId }) {
+  const userid = channelId;
+  console.log("userid", userid);
+
   const [formTweet, setFormTweet] = useState(null);
   const [alltweets, setallTweets] = useState(null);
 
@@ -63,9 +65,9 @@ function ProfileTweets({ isChannel, userid }) {
 
   const getAlltweets = () => {
     axios
-      .get(`api/v1/tweets/user/${userid}`)
+      .get(`/api/v1/tweets/user/${userid}`)
       .then((res) => {
-         console.log("res", res.data.data);
+        console.log("res", res.data.data);
         setallTweets(res.data.data);
       })
       .catch((err) => {
@@ -96,32 +98,34 @@ function ProfileTweets({ isChannel, userid }) {
 
   return (
     <>
-      <div className="relative w-full border border-gray-300 mb-3 shadow-sm">
-        <input
-          name="tweet"
-          value={formTweet || ""}
-          onChange={(e) => setFormTweet(e.target.value)}
-          className="w-full h-16 p-2 pb-9 border text-lg text-white border-gray-300  focus:outline-none focus:ring-2 focus:ring-violet-500 bg-slate-700 pr-16"
-          placeholder="Write an Announcement..."
-        />
-        <button
-          className="absolute bottom-2 right-2 h-8 bg-violet-500 hover:bg-red-600 text-white px-4 py-1 shadow-md text-sm rounded"
-          onClick={() => saveTweet(formTweet)}
-        >
-          Save
-        </button>
-      </div>
+      {!isChannel ? (
+        <div className="relative w-full border border-gray-300 mb-3 shadow-sm">
+          <input
+            name="tweet"
+            value={formTweet || ""}
+            onChange={(e) => setFormTweet(e.target.value)}
+            className="w-full h-16 p-2 pb-9 border text-lg text-white border-gray-300  focus:outline-none focus:ring-2 focus:ring-violet-500 bg-slate-700 pr-16"
+            placeholder="Write an Announcement..."
+          />
+          <button
+            className="absolute bottom-2 right-2 h-8 bg-violet-500 hover:bg-red-600 text-white px-4 py-1 shadow-md text-sm rounded"
+            onClick={() => saveTweet(formTweet)}
+          >
+            Save
+          </button>
+        </div>
+      ) : null}
 
       <div>
         {alltweets.map((tweet) => {
           return (
             <div className="flex ml-2 mt-3 " key={tweet._id}>
               <div className="flex ">
-                <Avatar h={50} w={50} src={tweet.ownerDetails.avatar} />
+                <Avatar h={50} w={50} src={tweet.owner.avatar} />
                 <div className="flex-col text-white pl-3 text-left">
                   <div className="flex items-center">
                     <p className="text-sm text-gray-400 mr-2">
-                      {tweet.ownerDetails.username}
+                      {tweet.owner.username}
                     </p>
                     <p className="text-[10px] text-gray-500 ">
                       {moment(tweet.createdAt).fromNow()}

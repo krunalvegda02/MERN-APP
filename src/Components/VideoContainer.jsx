@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Avatar } from "../index";
 import React from "react";
 import { MoreOutlined } from "@ant-design/icons";
+import moment from "moment";
 
 function VideoContainer({
   videoId,
@@ -42,7 +43,7 @@ function VideoContainer({
           <div className="flex items-center w-full text-xs text-gray-500 ">
             <div className="flex text-nowrap">{views.length} Views</div>
             <p className="px-1">•</p>
-            <div> {new Date(createdAt).toLocaleDateString()}</div>
+            <div> {moment(createdAt).fromNow()}</div>
           </div>
 
           {/* Creator Info */}

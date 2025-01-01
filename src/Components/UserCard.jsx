@@ -10,9 +10,7 @@ function UserCard({ username }) {
 
   const profileOpen = () => {
     const isChannel = true;
-    navigate(`/profile/${username}`, {
-      state: { isChannel },
-    });
+    navigate(`/profile/${username}/${false}`);
   };
 
   useEffect(() => {

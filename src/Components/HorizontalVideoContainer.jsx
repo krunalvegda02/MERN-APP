@@ -6,13 +6,15 @@ import { message } from "antd";
 function HorizontalVideoContainer({ id }) {
   const [video, setVideo] = useState(null);
   const [user, setUser] = useState(null);
+// console.log("id", id);
+
 
   useEffect(() => {
     axios
       .get(`/api/v1/videos/${id}`)
       .then((res) => {
         setUser(res.data.data.user);
-        console.log("Playlist Videos:", res.data.data.video);
+        // console.log("Playlist Videos:", res.data.data.video);
         setVideo(res.data.data.video);
         // console.log(`Video ${id}`, res.data.data);
       })

@@ -52,7 +52,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/profile/:username",
-        element: <MyProfile isChannel />,
+        element: <MyProfile />,
       },
       {
         path: "/settings",

@@ -3,6 +3,7 @@ import { AddPlaylistModal, Loading } from "../../index";
 import axios from "axios";
 import { PlusCircleOutlined, MoreOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 function ProfilePlaylist({ isChannel, channelId }) {
   const [playList, setPlaylist] = useState(null);
@@ -35,14 +36,16 @@ function ProfilePlaylist({ isChannel, channelId }) {
   return (
     <>
       <div className="flex flex-wrap gap-[0.6rem] mb-2">
-        <div className="w-[32.60%]   relative" onClick={createPlaylist}>
-          <div className="h-48 border-gray-700 border-[4px] ">
-            <PlusCircleOutlined className="text-gray-700 text-8xl mt-7" />
-            <p className="text-gray-500 font-semibold mt-2 text-2xl">
-              Create Playlist
-            </p>
+        {!isChannel ? (
+          <div className="w-[32.60%]   relative" onClick={createPlaylist}>
+            <div className="h-48 border-gray-700 border-[4px] ">
+              <PlusCircleOutlined className="text-gray-700 text-8xl mt-7" />
+              <p className="text-gray-500 font-semibold mt-2 text-2xl">
+                Create Playlist
+              </p>
+            </div>
           </div>
-        </div>
+        ) : null}
 
         {playList.length > 0 &&
           playList.map((i) => (
@@ -63,7 +66,7 @@ function ProfilePlaylist({ isChannel, channelId }) {
                     <p>PLaylist</p>
                     <div className="flex text-xs pt-1">
                       <p>{100} Views</p> <p className="px-3"> ● </p>
-                      <p>{new Date(i.createdAt).toLocaleDateString()}</p>
+                      <p>{moment(i.createdAt).fromNow()}</p>
                     </div>
                   </div>
                   <div className="text-white text-sm pt-3 ">
@@ -77,7 +80,7 @@ function ProfilePlaylist({ isChannel, channelId }) {
                   <p className=" text-lg">{i.name}</p>
                   <p className="text-xs text-gray-500">{i.description}</p>
                 </div>
-                <MoreOutlined className="text-lg" />
+                {!isChannel ? <MoreOutlined className="text-lg" /> : null}
               </div>
             </div>
           ))}

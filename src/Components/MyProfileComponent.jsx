@@ -12,13 +12,17 @@ import { Link } from "react-router-dom";
 import { message } from "antd";
 import axios from "axios";
 
-function MyProfileComponent({ Username, isChannel }) {
+function MyProfileComponent({ username, isChannel }) {
+  console.log("usrnjknfjbkjebfvkjb jksc jkb cjdsnjkdk", {
+    username,
+    isChannel,
+  });
+
   //for page menus
   const [pageState, setPageState] = useState(1);
 
   const [channeldata, setChanneldata] = useState(null);
 
-  const username = Username.username;
   // console.log(Username);
 
   useEffect(() => {
