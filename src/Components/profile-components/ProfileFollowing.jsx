@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { UserCard } from "../../index";
 import axios from "axios";
 
-function ProfileFollowing({ isChannel, channelId }) {
+function ProfileFollowing({ isChannel, channelId, username }) {
   
   console.log("ChannelId:", channelId);
   
@@ -22,7 +22,7 @@ function ProfileFollowing({ isChannel, channelId }) {
 
   return (
     <div>
-      {/* <UserCard  /> */}
+      <UserCard username={username} />
     </div>
   );
 }

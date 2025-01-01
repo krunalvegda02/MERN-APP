@@ -16,7 +16,8 @@ function MyProfileComponent({ isChannel = false, username = null }) {
   const [pageState, setPageState] = useState(1);
   const [channeldata, setChanneldata] = useState(null);
   const [userId, setUserId] = useState(userdata._id);
-  console.log("userId", userId);
+
+  // console.log("userId", userId);
 
   useEffect(() => {
     if (isChannel) {
@@ -27,12 +28,14 @@ function MyProfileComponent({ isChannel = false, username = null }) {
         })
         .catch((err) => {
           message.error("Channel fetching error");
-          console.error("API ERROR:", err);
+          console.error("API ERROR:", err)
         });
     }
   }, [isChannel]);
 
   const profileData = isChannel ? channeldata : userdata;
+console.log(profileData);
+
 
   return (
     <div>
@@ -60,9 +63,13 @@ function MyProfileComponent({ isChannel = false, username = null }) {
               @{profileData.username}
             </p>
             <div className="flex">
-              <p className="text-gray-300 text-sm">{100} Subscribers</p>
+              <p className="text-gray-300 text-sm">
+                {profileData.subscriberCount} Subscribers
+              </p>
               <p className="px-2 text-gray-300 text-sm">●</p>
-              <p className="text-gray-300 text-sm">{100} Subscribed</p>
+              <p className="text-gray-300 text-sm">
+                {profileData.channelsSubscribedToCount} Subscribed
+              </p>
             </div>
           </div>
         </div>
@@ -106,11 +113,21 @@ function MyProfileComponent({ isChannel = false, username = null }) {
 
       {/* Page Content */}
       <div className="mt-2 mr-3">
-        {pageState === 1 && <ProfileVideos isChannel={isChannel}  channelId={userId} />}
-        {pageState === 2 && <ProfilePlaylist isChannel={isChannel} channelId={userId} />}
-        {pageState === 3 && <ProfileTweets isChannel={isChannel} channelId={userId} />}
+        {pageState === 1 && (
+          <ProfileVideos isChannel={isChannel} channelId={userId} />
+        )}
+        {pageState === 2 && (
+          <ProfilePlaylist isChannel={isChannel} channelId={userId} />
+        )}
+        {pageState === 3 && (
+          <ProfileTweets isChannel={isChannel} channelId={userId} />
+        )}
         {pageState === 4 && (
-          <ProfileFollowing isChannel={isChannel} channelId={userId} />
+          <ProfileFollowing
+            isChannel={isChannel}
+            channelId={userId}
+            username={profileData.username}
+          />
         )}
       </div>
     </div>

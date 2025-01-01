@@ -137,7 +137,7 @@ function ProfileTweets({ isChannel, userid }) {
                     onClick={() => editTweet(tweet)}
                   />
                   <DeleteFilled
-                    className="text-2xl text-red-500 mr-1"
+                    className="text-2xl tex t-red-500 mr-1"
                     onClick={() => deleteTweet(tweet)}
                   />
                 </div>

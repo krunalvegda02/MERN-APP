@@ -12,16 +12,17 @@ function HorizontalVideoContainer({ id }) {
       .get(`/api/v1/videos/${id}`)
       .then((res) => {
         setUser(res.data.data.user);
+        console.log("Playlist Videos:", res.data.data.video);
         setVideo(res.data.data.video);
-        console.log("RES ", res.data.data);
+        // console.log(`Video ${id}`, res.data.data);
       })
       .catch((err) => {
         console.log("Video Fetching Video", err);
         message.error("Error Fetching Videos");
-      });
-  }, []);
+    });
+  }, [id ]);
 
-  console.log("video", video);
+  // console.log("video", video);
 
   if (!video && !user) {
     return null;

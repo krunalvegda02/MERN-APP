@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Container, Loading, HorizontalVideoContainer } from "../index";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function PlaylistPage() {
   const { id } = useParams();
@@ -9,6 +9,11 @@ function PlaylistPage() {
 
   const [videos, setVideos] = useState(null);
   const [playlist, setpLaylist] = useState(null);
+
+  const navigate = useNavigate();
+  const playVideo = (id) => {
+    navigate(`/play-video/${id}`);
+  };
 
   useEffect(() => {
     axios
@@ -26,11 +31,9 @@ function PlaylistPage() {
       });
   }, []);
 
-  console.log(
-    "playlist", playlist
-  );
-  
-  if (!playlist) {
+  console.log("playlist", playlist);
+
+  if (loading) {
     return (
       <div>
         <Loading />;
@@ -72,7 +75,14 @@ function PlaylistPage() {
             </div>
           </div>
         </div>
-        <div > <HorizontalVideoContainer id={playlist.videos[0]} /></div>
+        <div>
+          {videos.length > 0 &&
+            videos.map((videoId) => (
+              <div key={videoId} onClick={() => playVideo(videoId)}>
+                <HorizontalVideoContainer id={videoId} />
+              </div>
+            ))}
+        </div>
       </div>
     </Container>
   );

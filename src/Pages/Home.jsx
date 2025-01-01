@@ -42,7 +42,8 @@ function Home() {
                   createdAt={video.createdAt}
                   description={video.description}
                   src={video.video}
-                  owner={video.owner}
+                  owner={video.userDetails.username}
+                  avatar={video.userDetails.avatar}
                 />
               );
             })

@@ -61,13 +61,6 @@ function LikedVideos() {
               <HorizontalVideoContainer
                 id={likevideo.video._id}
                 key={likevideo.video._id}
-                src={likevideo.video.src}
-                createdAt={likevideo.video.createdAt}
-                owner={likevideo.video.owner}
-                thumbnail={likevideo.video.thumbnail}
-                title={likevideo.video.title}
-                views={likevideo.video.views}
-                description={likevideo.video.description}
               />
             </div>
           ))}
