@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Settings} from "../../index"
+import React, { useState } from "react";
+import { Settings } from "../../index";
 import { Link } from "react-router-dom";
 import {
   HomeOutlined,
@@ -8,12 +8,15 @@ import {
   VideoCameraOutlined,
   HistoryOutlined,
   SettingOutlined,
-  UserOutlined
+  UserOutlined,
 } from "@ant-design/icons";
 import LeftNavbarItemBox from "../LeftNavbarItemBox";
+import { useSelector } from "react-redux";
 
 function LeftNavBar() {
   const [showSettings, setShowSettings] = useState(false);
+
+  const username = useSelector((state) => state.userData.username);
 
   const handleSettingsClick = () => {
     setShowSettings(true);
@@ -47,7 +50,7 @@ function LeftNavBar() {
     {
       itemName: "My Profile",
       itemIcon: <UserOutlined className="text-2xl px-2 text-white" />,
-      link: "/profile",
+      link: `/profile/${username}`,
     },
   ];
   const lowerNavItems = [
@@ -82,7 +85,11 @@ function LeftNavBar() {
       {/* Lower Section */}
       <div className="absolute bottom-2">
         {lowerNavItems.map((item) => (
-          <Link to={item.link}  onClick={item.onClick || null} key={item.itemName}>
+          <Link
+            to={item.link}
+            onClick={item.onClick || null}
+            key={item.itemName}
+          >
             <LeftNavbarItemBox
               key={item.itemName}
               name={item.itemName}
@@ -92,11 +99,8 @@ function LeftNavBar() {
         ))}
       </div>
 
-        {/* Settings Navbar */}
-        <Settings
-        show={showSettings}
-        onBack={handleBackToMainNav}
-      />
+      {/* Settings Navbar */}
+      <Settings show={showSettings} onBack={handleBackToMainNav} />
     </div>
   );
 }

@@ -10,6 +10,7 @@ import {
 } from "@ant-design/icons";
 import { message, Modal } from "antd";
 import axios from "axios";
+import moment from "moment"
 
 function ProfileTweets({ isChannel, userid }) {
   const userId = userid || useSelector((state) => state.userData._id);
@@ -64,7 +65,7 @@ function ProfileTweets({ isChannel, userid }) {
     axios
       .get(`api/v1/tweets/user/${userid}`)
       .then((res) => {
-        // console.log("res", res.data.data);
+         console.log("res", res.data.data);
         setallTweets(res.data.data);
       })
       .catch((err) => {
@@ -119,8 +120,11 @@ function ProfileTweets({ isChannel, userid }) {
                 <Avatar h={50} w={50} src={tweet.ownerDetails.avatar} />
                 <div className="flex-col text-white pl-3 text-left">
                   <div className="flex items-center">
-                    <p className="text-sm text-gray-400 ">
+                    <p className="text-sm text-gray-400 mr-2">
                       {tweet.ownerDetails.username}
+                    </p>
+                    <p className="text-[10px] text-gray-500 ">
+                      {moment(tweet.createdAt).fromNow()}
                     </p>
                   </div>
                   <p className="text-base">{tweet.content}</p>
@@ -151,5 +155,3 @@ function ProfileTweets({ isChannel, userid }) {
 }
 
 export default ProfileTweets;
-
-

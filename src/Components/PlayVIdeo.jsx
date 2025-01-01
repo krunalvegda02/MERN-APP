@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Container, UserCard, Loading, Avatar } from "../index";
 import {
   LikeOutlined,
@@ -13,6 +13,7 @@ import {
 import axios from "axios";
 import { message, Modal } from "antd";
 import { useSelector } from "react-redux";
+import moment from "moment";
 
 function PlayVIdeo() {
   const videoId = useParams();
@@ -87,6 +88,7 @@ function PlayVIdeo() {
       .post(`/api/v1/comments/${videoId.id}`, { comment: formComment })
       .then(() => {
         getAllcomments();
+        setFormComment("");
         message.success("Comment Added Succesfully!");
       })
       .catch((err) => {
@@ -154,12 +156,7 @@ function PlayVIdeo() {
         <div className="text-lg text-white text-left p-2 pb-0 align-middle">
           <p className="text-2xl font-semibold ml-2">{videoData.description}</p>
           <div className="flex  justify-between ">
-            <div
-              className="flex"
-              onClick={() => {
-                OpenProfile;
-              }}
-            >
+            <div className="flex">
               <UserCard username={userData.username} />
             </div>
 
@@ -218,8 +215,11 @@ function PlayVIdeo() {
                       <Avatar h={35} w={35} src={cmnt.owner.avatar} />
                       <div className="flex-col text-white pl-3 text-left">
                         <div className="flex items-center">
-                          <p className="text-xs text-gray-400 ">
+                          <p className="text-xs text-gray-200 mr-2">
                             {cmnt.owner.username}
+                          </p>
+                          <p className="text-[10px] text-gray-500 ">
+                            {moment(cmnt.createdAt).fromNow()}
                           </p>
                         </div>
                         <p className="text-sm">{cmnt.content}</p>
@@ -231,7 +231,7 @@ function PlayVIdeo() {
                         </div>
                       </div>
                       <div className="absolute right-5">
-                        //TODO: IF it is my commment then and then only it should see this icons
+                        {/* //TODO: IF it is my commment then and then only itshould see this icons */}
                         <EditFilled
                           className="text-base text-green-500 mr-2"
                           onClick={() => editCmnt(cmnt)}

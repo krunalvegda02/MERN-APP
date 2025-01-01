@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, SubscribeBtn } from "../index";
+import { Avatar, MyProfileComponent, SubscribeBtn } from "../index";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function UserCard({ username }) {
   // console.log("username", username);
   const [channelData, setChannelData] = useState();
+  const navigate = useNavigate();
+
+  const profileOpen = () => {
+    const isChannel = true;
+    navigate(`/profile/${username}`, {
+      state: { isChannel },
+    });
+  };
 
   useEffect(() => {
     axios
@@ -24,7 +33,14 @@ function UserCard({ username }) {
   return (
     <div className="m-2 ">
       <div className="flex ">
-        <Avatar src={channelData.avatar} h={45} w={45} />
+        <div
+          onClick={() => {
+            profileOpen();
+          }}
+        >
+          <Avatar src={channelData.avatar} h={45} w={45} />
+        </div>
+
         <div className="text-left text-white">
           <p className=" text-lg pl-2"> {channelData.username}</p>
           <div className="flex pl-2 text-gray-400 text-xs mr-7 ">

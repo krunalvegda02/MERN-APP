@@ -51,8 +51,8 @@ const Router = createBrowserRouter([
         element: <MyDashboard />,
       },
       {
-        path: "/profile",
-        element: <MyProfile />,
+        path: "/profile/:username",
+        element: <MyProfile isChannel />,
       },
       {
         path: "/settings",

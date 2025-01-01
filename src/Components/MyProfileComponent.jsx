@@ -5,37 +5,38 @@ import {
   ProfileTweets,
   ProfileFollowing,
   ProfilePlaylist,
+  Loading,
 } from "../index";
-import { useSelector } from "react-redux";
 import { EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { message } from "antd";
+import axios from "axios";
 
-function MyProfileComponent({ isChannel = false, username = null }) {
-  const userdata = useSelector((state) => state.userData);
+function MyProfileComponent({ Username, isChannel }) {
+  //for page menus
   const [pageState, setPageState] = useState(1);
-  const [channeldata, setChanneldata] = useState(null);
-  const [userId, setUserId] = useState(userdata._id);
 
-  // console.log("userId", userId);
+  const [channeldata, setChanneldata] = useState(null);
+
+  const username = Username.username;
+  // console.log(Username);
 
   useEffect(() => {
-    if (isChannel) {
-      axios
-        .get(`/api/v1/c/${username}`)
-        .then((res) => {
-          setChanneldata(res.data.data);
-        })
-        .catch((err) => {
-          message.error("Channel fetching error");
-          console.error("API ERROR:", err)
-        });
-    }
-  }, [isChannel]);
+    axios
+      .get(`/api/v1/users/c/${username}`)
+      .then((res) => {
+        console.log("Channeldata", res.data.data);
+        setChanneldata(res.data.data);
+      })
+      .catch((err) => {
+        message.error("Channel fetching error");
+        console.error("API ERROR:", err);
+      });
+  }, []);
 
-  const profileData = isChannel ? channeldata : userdata;
-console.log(profileData);
-
+  if (!channeldata) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -43,7 +44,7 @@ console.log(profileData);
       <div className="h-[100px] bg-white">
         <img
           src={
-            profileData.coverImage ||
+            channeldata.coverImage ||
             "https://tse1.mm.bing.net/th?id=OIP.ExnS3_PBvo0jK-W75PxmEwHaEK&pid=Api&P=0&h=180"
           }
           alt="coverimage"
@@ -54,21 +55,21 @@ console.log(profileData);
       {/* Profile Section */}
       <div className="flex justify-between p-3 ">
         <div className="flex text-left">
-          <Avatar h={130} w={130} src={profileData.avatar} />
+          <Avatar h={130} w={130} src={channeldata.avatar} />
           <div className="flex-col pt-11 pl-4">
             <p className="text-white text-3xl pb-1 font-semibold">
-              {profileData.fullname}
+              {channeldata.fullname}
             </p>
             <p className="text-gray-300 text-sm pb-0.5">
-              @{profileData.username}
+              @{channeldata.username}
             </p>
             <div className="flex">
               <p className="text-gray-300 text-sm">
-                {profileData.subscriberCount} Subscribers
+                {channeldata.subscriberCount} Subscribers
               </p>
               <p className="px-2 text-gray-300 text-sm">●</p>
               <p className="text-gray-300 text-sm">
-                {profileData.channelsSubscribedToCount} Subscribed
+                {channeldata.channelsSubscribedToCount} Subscribed
               </p>
             </div>
           </div>
@@ -114,19 +115,19 @@ console.log(profileData);
       {/* Page Content */}
       <div className="mt-2 mr-3">
         {pageState === 1 && (
-          <ProfileVideos isChannel={isChannel} channelId={userId} />
+          <ProfileVideos isChannel={isChannel} channelId={channeldata._id} />
         )}
         {pageState === 2 && (
-          <ProfilePlaylist isChannel={isChannel} channelId={userId} />
+          <ProfilePlaylist isChannel={isChannel} channelId={channeldata._id} />
         )}
         {pageState === 3 && (
-          <ProfileTweets isChannel={isChannel} channelId={userId} />
+          <ProfileTweets isChannel={isChannel} channelId={channeldata._id} />
         )}
         {pageState === 4 && (
           <ProfileFollowing
             isChannel={isChannel}
-            channelId={userId}
-            username={profileData.username}
+            channelId={channeldata._id}
+            username={username}
           />
         )}
       </div>

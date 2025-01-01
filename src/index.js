@@ -32,6 +32,7 @@ import ProfileTweets from "./Components/profile-components/ProfileTweets";
 import ProfilePlaylist from "./Components/profile-components/ProfilePlaylist";
 import ProfileFollowing from "./Components/profile-components/ProfileFollowing";
 
+import GetVideoById from "./Components/GetVideoById";
 import AddPlaylistModal from "./Components/AddPlaylistModal";
 
 //Setting Pages
@@ -79,4 +80,5 @@ export {
   UploadVideo,
   AddPlaylistModal,
   PlaylistPage,
+  GetVideoById,
 };
