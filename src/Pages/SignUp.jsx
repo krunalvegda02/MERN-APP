@@ -1,11 +1,11 @@
 import React from "react";
-import { Container, SignUpComponent } from "../index";
+import { Container, EditProfile, SignUpComponent } from "../index";
 
 function SignUp() {
   return (
     
       <Container>
-        <SignUpComponent />
+        <EditProfile isSignUp={true} />
       </Container>
   );
 }

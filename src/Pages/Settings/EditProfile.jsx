@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Form, Button, Input, Avatar, Upload, message } from "antd";
 import { Container } from "../../index";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { updateLogin } from "../../redux/Current user data/userSlice";
 import ImgCrop from "antd-img-crop";
 
-function EditProfile() {
+function EditProfile({ isSignUp = false }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -18,20 +18,20 @@ function EditProfile() {
   const [coverFile, setCoverFile] = useState(null);
 
   const [coverImage, setCoverImage] = useState(
-    useSelector((state) => state.userData.coverImage)
+    useSelector((state) => state.userData.coverImage) || <UploadOutlined />
   );
   const [avatar, setAvatar] = useState(
-    useSelector((state) => state.userData.avatar)
+    useSelector((state) => state.userData.avatar) || <UserOutlined />
   );
 
   const handleAvatarChange = (e) => {
-    console.log(e.file);
+    // console.log(e.file);
     if (e.file) {
       setAvatarFile(e.file);
     }
   };
   const handleCoverChange = (e) => {
-    console.log("e", e);
+    // console.log("e", e);
 
     if (e.file) {
       setCoverFile(e.file);
@@ -102,6 +102,7 @@ function EditProfile() {
   const closeUploadCoverImage = () => {
     message.error("Failed to Upload CoverImage");
   };
+
   //Close model for avatar upload
   const closeModal = () => {
     message.error("Failed to Upload Avatar");
@@ -130,13 +131,45 @@ function EditProfile() {
       });
   };
 
+  const createUser = () => {
+    setLoading(true);
+    form
+      .validateFields()
+      .then((values) => {
+        axios
+          .patch(
+            "/api/v1/users/registerUser",
+            {
+              avatar: avatarFile,
+              coverImage: coverFile,
+              values,
+            },
+            { headers: { "Content-Type": "multipart/form-data" } }
+          )
+          .then((res) => {
+            console.log("API RES:", res.data.data);
+            dispatch(updateLogin(res.data.data));
+            message.success("Account Created succesfully");
+            setLoading(false);
+            form.resetFields();
+            setTimeout(() => {
+              navigate("/profile");
+            }, 500);
+          });
+      })
+      .catch((err) => {
+        console.log("API ERROR:", err);
+        message.error("Failed to Create Profile");
+      });
+  };
+
   return (
     <Container>
       <div className="flex justify-center align-middle mt-10">
         <div className="p-3  w-2/3 rounded-xl">
           <div>
             <p className="flex text-3xl text-white font-semibold mb-7">
-              Edit Profile
+              {isSignUp ? "Create User" : "Edit Profile"}
             </p>
           </div>
           <div className="flex justify-between">
@@ -154,7 +187,9 @@ function EditProfile() {
                   modalOk="Upload"
                   onModalOk={() => uploadAvatar(avatarFile)}
                   modalTitle={
-                    <p className="text-2xl font-semibold ">Update Avatar</p>
+                    <p className="text-2xl font-semibold ">
+                      {isSignUp ? "Upload Avatar" : " Update Avatar"}
+                    </p>
                   }
                 >
                   <Upload
@@ -165,10 +200,12 @@ function EditProfile() {
                     onChange={handleAvatarChange}
                     accept="image/*"
                   >
-                    <p className="text-lg mt-2 text-violet-600">
-                      <UploadOutlined className="mr-2" />
-                      Change Avatar
-                    </p>
+                    {!isSignUp && (
+                      <p className="text-lg mt-2 text-violet-600">
+                        <UploadOutlined className="mr-2" />
+                        Change Avatar
+                      </p>
+                    )}
                   </Upload>
                 </ImgCrop>
               </div>
@@ -187,7 +224,9 @@ function EditProfile() {
                 modalOk="Upload"
                 onModalOk={() => uploadCoverImage(coverFile)}
                 modalTitle={
-                  <p className="text-2xl font-semibold ">Update Cover Image</p>
+                  <p className="text-2xl font-semibold ">
+                    {isSignUp ? "Upload Cover Image" : "Update Cover Image"}
+                  </p>
                 }
               >
                 <Upload
@@ -198,17 +237,19 @@ function EditProfile() {
                   onChange={handleCoverChange}
                   accept="image/*"
                 >
-                  <p className="text-lg mt-2 text-violet-600">
-                    <UploadOutlined className="mr-2" />
-                    Change CoverImage
-                  </p>
+                  {!isSignUp && (
+                    <p className="text-lg mt-2 text-violet-600">
+                      <UploadOutlined className="mr-2" />
+                      Change CoverImage
+                    </p>
+                  )}
                 </Upload>
               </ImgCrop>
             </div>
           </div>
 
           <Form
-            onFinish={EditProfile}
+            onFinish={isSignUp ? createUser : EditProfile}
             layout="vertical"
             name="edit profile"
             {...(loading ? { loading: true } : {})}
@@ -217,6 +258,12 @@ function EditProfile() {
             <Form.Item
               name="username"
               label={<p className=" text-lg font-sans text-white">Username:</p>}
+              rules={[
+                {
+                  required: isSignUp,
+                  message: "Please Enter a username!",
+                },
+              ]}
             >
               <Input
                 placeholder="Enter your Username"
@@ -226,19 +273,61 @@ function EditProfile() {
             <Form.Item
               name="fullname"
               label={<p className="text-lg font-sans text-white">Fullname:</p>}
+              rules={[
+                {
+                  required: isSignUp,
+                  message: "Please Enter a Fullname!",
+                },
+              ]}
             >
               <Input
                 placeholder="Enter your Fullname"
                 className="h-9 text-white placeholder-slate-400 hover:bg-slate-700 bg-slate-700 focus:bg-slate-700"
               ></Input>
             </Form.Item>
+            {isSignUp && (
+              <Form.Item
+                name="email"
+                label={<p className=" text-lg font-sans text-white">email:</p>}
+                rules={[
+                  {
+                    required: isSignUp,
+                    message: "Please Enter a Email!",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Enter your Email"
+                  className="h-9 text-white placeholder-slate-400 hover:bg-slate-700 bg-slate-700 focus:bg-slate-700"
+                ></Input>
+              </Form.Item>
+            )}
+            {isSignUp && (
+              <Form.Item
+                name="password"
+                label={
+                  <p className=" text-lg font-sans text-white">Password:</p>
+                }
+                rules={[
+                  {
+                    required: isSignUp,
+                    message: "Please Enter a Password!",
+                  },
+                ]}
+              >
+                <Input.Password
+                  placeholder="Enter your password"
+                  className="h-9 text-white  placeholder-slate-400 hover:bg-slate-700 bg-slate-700 focus:bg-slate-700"
+                />
+              </Form.Item>
+            )}
             <Form.Item>
               <Button
                 htmlType="submit"
                 type="primary"
                 className=" h-10 w-1/3 text-lg bg-violet-500 text-black font-semibold cursor-pointer  "
               >
-                Submit
+                {isSignUp ? "Create" : "Submit"}
               </Button>
             </Form.Item>
           </Form>
