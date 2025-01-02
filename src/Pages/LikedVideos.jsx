@@ -26,7 +26,7 @@ function LikedVideos() {
   };
 
   const openAddPlaylistModal = (videoId) => {
-    setVideoid(videoId)
+    setVideoid(videoId);
     setplaylistmodal(true);
   };
 

@@ -14,7 +14,6 @@ import Container from "./Components/Container";
 import VideoContainer from "./Components/VideoContainer";
 import SearchBox from "./Components/SearchBox";
 import LoginComponent from "./Components/LoginComponent";
-import SignUpComponent from "./Components/SignUpComponent";
 import MyVideos from "./Components/MyVideos";
 import Avatar from "./Components/Avatar";
 import NavbarUserDetails from "./Components/NavbarUserDetails";
@@ -57,7 +56,6 @@ export {
   VideoContainer,
   SearchBox,
   LoginComponent,
-  SignUpComponent,
   Login,
   SignUp,
   MyVideos,
