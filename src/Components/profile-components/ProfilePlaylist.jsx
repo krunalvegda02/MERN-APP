@@ -72,9 +72,9 @@ function ProfilePlaylist({ isChannel, channelId }) {
           EditPlaylist(playlistId);
         }}
       >
-        <p className="text-base">
+        <p className="text-base flex text-white font-semibold">
           <EditFilled />
-          Edit
+        <p className=" ml-2">Edit</p>   
         </p>
       </div>
       <div
@@ -82,8 +82,8 @@ function ProfilePlaylist({ isChannel, channelId }) {
           deletePlaylist(playlistId);
         }}
       >
-        <p className="text-base">
-          <DeleteFilled /> Delete
+        <p className="text-base font-semibold  text-white">
+          <DeleteFilled className="mr-1"/> Delete
         </p>
       </div>
       {editModal && (
@@ -156,7 +156,7 @@ function ProfilePlaylist({ isChannel, channelId }) {
                   <Popover
                     content={() => content(i._id)}
                     trigger="click"
-                    color="#c4b5fd"
+                    color="#1e293b  "
                     placement="left"
                     arrow=""
                   >

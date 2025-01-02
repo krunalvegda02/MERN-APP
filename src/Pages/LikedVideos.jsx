@@ -1,18 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { Container, FloatingActionButton, Loading } from "../index";
-import HorizontalVideoContainer from "../Components/HorizontalVideoContainer";
+import {
+  Container,
+  FloatingActionButton,
+  Loading,
+  HorizontalVideoContainer,
+  AddVideoToPlaylist,
+} from "../index";
 import axios from "axios";
-import { HomeOutlined } from "@ant-design/icons";
+import { HomeOutlined, MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { Popover } from "antd";
 
 function LikedVideos() {
   const [loading, setLoading] = useState(true);
+
+  const [videoId, setVideoid] = useState(null);
   const [likedVideos, setLikedVideos] = useState([]);
-  console.log(likedVideos);
+  const [playlistmodal, setplaylistmodal] = useState(false);
+
+  // console.log(likedVideos);
 
   const navigate = useNavigate();
   const playVideo = (id) => {
     navigate(`/play-video/${id}`);
+  };
+
+  const openAddPlaylistModal = (videoId) => {
+    setVideoid(videoId)
+    setplaylistmodal(true);
+  };
+
+  const closeAddPlaylistModal = () => {
+    setplaylistmodal(false);
+  };
+
+  const content = (videoId) => {
+    return (
+      <div
+        className="flex gap-2 text-white font-semibold"
+        onClick={() => openAddPlaylistModal(videoId)}
+      >
+        <PlusOutlined />
+        <p>Add Video To Playlist</p>
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -57,16 +88,31 @@ function LikedVideos() {
       <div>
         {likedVideos.length > 0 &&
           likedVideos.map((likevideo) => (
-            <div onClick={() => playVideo(likevideo.video._id)}>
-              <HorizontalVideoContainer
-                id={likevideo.video._id}
-                key={likevideo.video._id}
-              />
+            <div className="flex relative" key={likevideo.video._id}>
+              <div onClick={() => playVideo(likevideo.video._id)}>
+                <HorizontalVideoContainer id={likevideo.video._id} />
+              </div>
+              <Popover
+                content={() => content(likevideo.video._id)}
+                trigger="click"
+                color="#1e293b  "
+                placement="bottom"
+                arrow=""
+              >
+                <MoreOutlined className="text-white text-2xl right-3 absolute top-4" />
+              </Popover>
             </div>
           ))}
       </div>
 
       <FloatingActionButton />
+      {playlistmodal && (
+        <AddVideoToPlaylist
+          isOpen={playlistmodal}
+          onClose={closeAddPlaylistModal}
+          VideoId={videoId}
+        />
+      )}
     </Container>
   );
 }

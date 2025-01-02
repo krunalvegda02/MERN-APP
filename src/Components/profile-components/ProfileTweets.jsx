@@ -59,10 +59,6 @@ function ProfileTweets({ isChannel, channelId }) {
     });
   };
 
-  useEffect(() => {
-    getAlltweets();
-  }, []);
-
   const getAlltweets = () => {
     axios
       .get(`/api/v1/tweets/user/${userid}`)
@@ -91,6 +87,10 @@ function ProfileTweets({ isChannel, channelId }) {
         message.error("Failed to post tweet!");
       });
   };
+
+  useEffect(() => {
+    getAlltweets();
+  }, []);
 
   if (!alltweets) {
     return <Loading />;
@@ -134,9 +134,8 @@ function ProfileTweets({ isChannel, channelId }) {
                   <p className="text-base">{tweet.content}</p>
                   <div className="mt-1 text-sm text-gray-300">
                     <LikeOutlined className="pr-1" />
-                    {"344"}
+
                     <DislikeOutlined className="pr-1 pl-2" />
-                    {"344"}
                   </div>
                 </div>
                 <div className="absolute right-5">
@@ -145,7 +144,7 @@ function ProfileTweets({ isChannel, channelId }) {
                     onClick={() => editTweet(tweet)}
                   />
                   <DeleteFilled
-                    className="text-2xl tex t-red-500 mr-1"
+                    className="text-2xl text-red-500 mr-1"
                     onClick={() => deleteTweet(tweet)}
                   />
                 </div>

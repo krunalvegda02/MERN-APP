@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Container, Loading, HorizontalVideoContainer } from "../index";
 import { useNavigate, useParams } from "react-router-dom";
+import { message, Popover } from "antd";
+import { DeleteFilled, MoreOutlined } from "@ant-design/icons";
 
 function PlaylistPage() {
   const { id } = useParams();
@@ -15,7 +17,7 @@ function PlaylistPage() {
     navigate(`/play-video/${id}`);
   };
 
-  useEffect(() => {
+  const getPlaylist = () => {
     axios
       .get(`/api/v1/playlist/${id}`)
       .then((res) => {
@@ -29,6 +31,35 @@ function PlaylistPage() {
         message.error("Error Fetching Playlist");
         console.log("Err", err);
       });
+  };
+
+  const removePlaylistVideo = (videoId) => {
+    axios
+      .patch(`/api/v1/playlist/remove/${videoId}/${playlist._id}`)
+      .then((res) => {
+        getPlaylist();
+        message.success("Remove Video Succesfully");
+      })
+      .catch((err) => {
+        console.log("err", err);
+        message.error("Error removing video");
+      });
+  };
+
+  const content = (videoId) => {
+    return (
+      <div
+        className="flex gap-2 text-white font-semibold"
+        onClick={() => removePlaylistVideo(videoId)}
+      >
+        <DeleteFilled className="text-red-500 text-lg" />
+        <p>Remove Video</p>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    getPlaylist();
   }, []);
 
   console.log("playlist", playlist);
@@ -78,8 +109,19 @@ function PlaylistPage() {
         <div>
           {videos.length > 0 &&
             videos.map((videoId) => (
-              <div key={videoId} onClick={() => playVideo(videoId)}>
-                <HorizontalVideoContainer id={videoId} />
+              <div key={videoId} className="relative flex">
+                <div onClick={() => playVideo(videoId)}>
+                  <HorizontalVideoContainer id={videoId} />
+                </div>
+                <Popover
+                  content={() => content(videoId)}
+                  trigger="click"
+                  color="#1e293b  "
+                  placement="bottom"
+                  arrow=""
+                >
+                  <MoreOutlined className="text-white text-2xl right-3 absolute top-4" />
+                </Popover>
               </div>
             ))}
         </div>

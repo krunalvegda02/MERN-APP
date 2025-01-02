@@ -31,6 +31,7 @@ import ProfileVideos from "./Components/profile-components/ProfileVideos";
 import ProfileTweets from "./Components/profile-components/ProfileTweets";
 import ProfilePlaylist from "./Components/profile-components/ProfilePlaylist";
 import ProfileFollowing from "./Components/profile-components/ProfileFollowing";
+import AddVideoToPlaylist from "./Components/AddVideoToPlaylist";
 
 import GetVideoById from "./Components/GetVideoById";
 import AddPlaylistModal from "./Components/AddPlaylistModal";
@@ -81,4 +82,5 @@ export {
   AddPlaylistModal,
   PlaylistPage,
   GetVideoById,
+  AddVideoToPlaylist,
 };

@@ -74,7 +74,7 @@ function MyProfileComponent({ username, isChannel }) {
             </div>
           </div>
         </div>
-        {/* <Link to="/edit-profile">
+        {/*
           <div className="flex justify-center bg-violet-400 mt-12 mr-3 h-8  pb-1.5 px-2 rounded-lg hover:bg-violet-500 hover:border duration-300">
             <EditOutlined />
             <p className="pl-2 font-medium text-lg ">
@@ -83,16 +83,18 @@ function MyProfileComponent({ username, isChannel }) {
           </div>
         </Link> */}
         {!isChannel ? (
-          <div className="flex justify-center mt-12 mr-3  h-8 px-2 border bg-violet-400  hover:bg-violet-500 hover:border duration-300">
-            <div>
-              <EditOutlined className="text-lg pt-1.5 " />
+          <Link to="/edit-profile">
+            <div className="flex justify-center mt-12 mr-3  h-8 px-2 border bg-violet-400  hover:bg-violet-500 hover:border duration-300">
+              <div>
+                <EditOutlined className="text-lg pt-1.5 " />
+              </div>
+              <p className="pl-2 font-medium text-lg ">Edit</p>
             </div>
-            <p className="pl-2 font-medium text-lg ">Edit</p>
-          </div>
+          </Link>
         ) : (
           <div className="flex justify-center mt-12 mr-3  h-8   bg-violet-400  hover:bg-violet-500 hover:border duration-300">
-           <SubscribeBtn />
-           </div>
+            <SubscribeBtn />
+          </div>
         )}
       </div>
 
