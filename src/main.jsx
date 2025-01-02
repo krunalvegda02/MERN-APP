@@ -23,6 +23,7 @@ import {
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react"; // Import PersistGate
 import UploadVideo from "./Components/UploadVideo.jsx";
+import AuthLayout from "./Components/Auth Layout/AuthLayout.jsx"
 
 // Router configuration
 const Router = createBrowserRouter([
@@ -36,59 +37,115 @@ const Router = createBrowserRouter([
       },
       {
         path: "/watch-history",
-        element: <History />,
+        element: (
+          <AuthLayout authentication>
+            <History />
+          </AuthLayout>
+        ),
       },
       {
         path: "/likes",
-        element: <LikedVideos />,
+        element: (
+          <AuthLayout authentication>
+            <LikedVideos />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/my-content",
-        element: <MyContent />,
+        element: (
+          <AuthLayout authentication>
+            <MyContent />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/dashboard",
-        element: <MyDashboard />,
+        element: (
+          <AuthLayout authentication>
+            <MyDashboard />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/profile/:username",
-        element: <MyProfile />,
+        element: (
+          <AuthLayout authentication>
+            <MyProfile />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/settings",
-        element: <Settings />,
+        element: (
+          <AuthLayout authentication>
+            <Settings />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <AuthLayout authentication={false}>
+            <Login />
+          </AuthLayout>
+        ),
       },
       {
         path: "/register-user",
-        element: <SignUp />,
+        element: (
+          <AuthLayout authentication={false}>
+            <SignUp />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/edit-profile",
-        element: <EditProfile />,
+        element: (
+          <AuthLayout authentication>
+            <EditProfile />
+          </AuthLayout>
+        ),
       },
       {
         path: "/change-password",
-        element: <ChangePassword />,
+        element: (
+          <AuthLayout authentication>
+            <ChangePassword />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/logout",
-        element: <Logout />,
+        element: (
+          <AuthLayout authentication>
+            <Logout />
+          </AuthLayout>
+        ),
       },
       {
         path: "/play-video/:id",
-        element: <PlayVIdeo />,
+        element: (
+          <AuthLayout authentication>
+            <PlayVIdeo />
+          </AuthLayout>
+        ),
       },
       {
         path: "/upload-video",
-        element: <UploadVideo />,
+        element: (
+          <AuthLayout authentication>
+            <UploadVideo />
+          </AuthLayout>
+        ),
       },
       {
         path: "/playlist/:id",
-        element: <PlaylistPage />,
+        element: (
+          <AuthLayout authentication>
+            <PlaylistPage />
+          </AuthLayout>
+        ),
       },
     ],
   },

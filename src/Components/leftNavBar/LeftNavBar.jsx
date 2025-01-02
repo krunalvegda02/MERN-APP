@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 function LeftNavBar() {
   const [showSettings, setShowSettings] = useState(false);
   const navigate = useNavigate();
-  const username = useSelector((state) => state.userData.username);
+  const username =   "ull" || useSelector((state) => state.userData.username) ;
 
   const handleSettingsClick = () => {
     setShowSettings(true);
@@ -95,6 +95,7 @@ function LeftNavBar() {
           )
         )}
       </div>
+ 
 
       {/* Lower Section */}
       <div className="absolute bottom-2">

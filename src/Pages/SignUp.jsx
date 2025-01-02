@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, EditProfile, SignUpComponent } from "../index";
+import { Container, EditProfile } from "../index";
 
 function SignUp() {
   return (
