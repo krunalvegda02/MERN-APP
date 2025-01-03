@@ -41,7 +41,6 @@ function PlayVIdeo() {
         .then((res) => {
           // console.log("Edit response:", res);
           console.log("commnet update:", res);
-
           message.success("Comment Updated succesfully");
           getAllcomments();
         })

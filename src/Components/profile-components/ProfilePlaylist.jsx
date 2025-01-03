@@ -99,7 +99,7 @@ function ProfilePlaylist({ isChannel, channelId }) {
 
   useEffect(() => {
     getAllPlaylists();
-  }, [EditPlaylist]);
+  }, []);
 
   if (!playList) {
     return <Loading />;

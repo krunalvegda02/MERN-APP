@@ -152,7 +152,7 @@ function DashboardComponent() {
           />
           <p className="mt-3.5 text-white text-xs">Total Views</p>
           <p className="mt-2 font-bold font-mono text-white text-3xl">
-            {statData.totalViews[0].totalViews}
+            {statData.totalViews[0]?.totalViews || 0}
           </p>
         </div>
         <div className="border w-[30%] h-36 text-start p-4">
@@ -169,7 +169,7 @@ function DashboardComponent() {
           />
           <p className="mt-3.5 text-white text-xs">Total Likes</p>
           <p className="mt-2 font-bold font-mono text-white text-3xl">
-            {statData.totalLikes[0].totalLikes}
+            {statData.totalLikes[0]?.totalLikes || 0}
           </p>
         </div>
       </div>

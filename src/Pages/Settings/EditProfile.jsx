@@ -18,10 +18,14 @@ function EditProfile({ isSignUp = false }) {
   const [coverFile, setCoverFile] = useState(null);
 
   const [coverImage, setCoverImage] = useState(
-    useSelector((state) => state.userData.coverImage) || <UploadOutlined />
+    useSelector((state) => state?.userData?.coverImage) || (
+      <UploadOutlined className="h-[50px] w-[350px] " />
+    )
   );
   const [avatar, setAvatar] = useState(
-    useSelector((state) => state.userData.avatar) || <UserOutlined />
+    useSelector((state) => state?.userData?.avatar) || (
+      <UserOutlined className="border rounded-full  p-5 text-5xl" />
+    )
   );
 
   const handleAvatarChange = (e) => {
@@ -30,9 +34,9 @@ function EditProfile({ isSignUp = false }) {
       setAvatarFile(e.file);
     }
   };
+
   const handleCoverChange = (e) => {
     // console.log("e", e);
-
     if (e.file) {
       setCoverFile(e.file);
     }
@@ -200,12 +204,12 @@ function EditProfile({ isSignUp = false }) {
                     onChange={handleAvatarChange}
                     accept="image/*"
                   >
-                    {!isSignUp && (
+                    {
                       <p className="text-lg mt-2 text-violet-600">
                         <UploadOutlined className="mr-2" />
-                        Change Avatar
+                        {isSignUp ? "Upload avatar" : "Change avatar"}
                       </p>
-                    )}
+                    }
                   </Upload>
                 </ImgCrop>
               </div>
@@ -237,12 +241,12 @@ function EditProfile({ isSignUp = false }) {
                   onChange={handleCoverChange}
                   accept="image/*"
                 >
-                  {!isSignUp && (
+                  {
                     <p className="text-lg mt-2 text-violet-600">
                       <UploadOutlined className="mr-2" />
-                      Change CoverImage
+                      {isSignUp ? "Upload CoverImage" : "Change CoverImage"}
                     </p>
-                  )}
+                  }
                 </Upload>
               </ImgCrop>
             </div>

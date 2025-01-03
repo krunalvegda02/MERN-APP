@@ -77,7 +77,7 @@ function ProfileTweets({ isChannel, channelId }) {
       return;
     }
     axios
-      .post(`/api/v1/tweets`, { userId: userId, content: tweet })
+      .post(`/api/v1/tweets`, { userId: userid, content: tweet })
       .then(() => {
         message.success("Tweet posted successfully!");
         setFormTweet("");

@@ -50,7 +50,7 @@ function VideoContainer({
           className="absolute inset-0 w-full h-full object-cover cursor-pointer"
         />
       </div>
-      <div className="flex mt-2 gap-3">
+      <div className="flex mt-2 gap-3 ">
         {/* Avatar */}
         <div>
           <Avatar w={37} h={37} src={avatar} />
@@ -60,7 +60,7 @@ function VideoContainer({
         <div className="flex-grow">
           {/* Title */}
           <div className="flex items-center justify-between text-white font-semibold text-sm">
-            <p className="truncate">{title}</p>
+            <p   className="truncate max-w-[170px] text-ellipsis whitespace-nowrap">{title}</p>
           </div>
 
           {/* Views and Created At */}
