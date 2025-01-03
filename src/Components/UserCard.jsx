@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function UserCard({ username }) {
-  // console.log("username", username);
+  console.log("username", username);
   const [channelData, setChannelData] = useState();
 
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ function UserCard({ username }) {
     axios
       .get(`/api/v1/users/c/${username}`)
       .then((res) => {
+        console.log("username", username);
         console.log("USER CARD:", res.data.data);
         setChannelData(res.data.data);
       })
