@@ -19,6 +19,7 @@ function DashboardComponent() {
   const [statData, setStatData] = useState(null);
   const [videoData, setvideoData] = useState(null);
   const [loading, setloading] = useState(false);
+  // const views = 0;
 
   const DeleteVideo = (i) => {
     setloading(true);
@@ -113,6 +114,13 @@ function DashboardComponent() {
     );
   }
 
+  // const TotalViews ={
+  //   videoData.views.map((view) => {
+  //     views += view;
+  //   });
+  // }
+  // console.log("Total viewa", TotalViews );
+
   return (
     <div className="p-10">
       {/* Introduction */}
@@ -120,7 +128,6 @@ function DashboardComponent() {
         <div className="flex justify-between">
           <div>
             <p className="text-4xl font-serif">
-              {" "}
               Hello, {statData.userdata.fullname}
             </p>
             <p className="text-sm text-gray-500">
@@ -145,7 +152,7 @@ function DashboardComponent() {
           />
           <p className="mt-3.5 text-white text-xs">Total Views</p>
           <p className="mt-2 font-bold font-mono text-white text-3xl">
-            {statData.totalViews}
+            {statData.totalViews[0].totalViews}
           </p>
         </div>
         <div className="border w-[30%] h-36 text-start p-4">
@@ -162,7 +169,7 @@ function DashboardComponent() {
           />
           <p className="mt-3.5 text-white text-xs">Total Likes</p>
           <p className="mt-2 font-bold font-mono text-white text-3xl">
-            {statData.totalLikes}
+            {statData.totalLikes[0].totalLikes}
           </p>
         </div>
       </div>
@@ -224,10 +231,7 @@ function DashboardComponent() {
                 </div>
                 <div className="text-start flex">
                   <p className="mr-1 bg-green-100 text-green-600 px-1 py-0.5 rounded-md">
-                    {200} Likes
-                  </p>
-                  <p className="bg-red-100 text-red-600 px-1 py-0.5 rounded-md">
-                    {499} Dislikes
+                    {i.likes} Likes
                   </p>
                 </div>
                 <div className="text-start">

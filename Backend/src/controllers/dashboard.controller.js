@@ -23,19 +23,31 @@ const getChannelStats = asyncHandler(async (req, res) => {
   const totalVideos = await Video.find({ owner: channelId });
   // const totalLikes = await Like.find({ owner: channelId });
 
-  const totalLikes = await Like.countDocuments({
-    video: { $in: (await Video.find({ owner: channelId })).map((v) => v._id) },
-  });
+  const totalLikes = await Like.aggregate([
+    {
+      $match: {
+        video: {
+          $in: (await Video.find({ owner: channelId }).select("_id")) // Fetch only the _id field
+            .map((video) => video._id), // Extract the _id values into an array
+        },
+      },
+    },
+    {
+      $unwind: "$likedBy",
+    },
+    {
+      $count: "totalLikes",
+    },
+  ]);
 
+  // video:
 
-// ! views is array so find that is sum will work here or not cz output is always 0
-  const totalViews =
-    (
-      await Video.aggregate([
-        { $match: { owner: channelId } },
-        { $group: { _id: null, totalViews: { $sum: "$views" } } },
-      ])
-    )[0]?.totalViews || 0;
+  // ! views is array so find that is sum will work here or not cz output is always 0
+  const totalViews = await Video.aggregate([
+    { $match: { owner: channelId } },
+    { $unwind: "$views" },
+    { $count: "totalViews" },
+  ]);
 
   return res.status(200).json(
     new ApiResponse(
@@ -54,12 +66,36 @@ const getChannelStats = asyncHandler(async (req, res) => {
 
 const getChannelVideos = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  console.log("Fetching videos for user: ", userId);
-  const videos = await Video.find({ owner: userId }).limit(10);
-  if (!videos || videos.length === 0) {
-    throw new ApiError(400, "Channel does not publish any video");
-  }
-  console.log(videos);
+  // console.log("Fetching videos for user: ", userId);
+
+  const videos = await Video.aggregate([
+    {
+      $match: { owner: userId },
+    },
+    {
+      $lookup: {
+        from: "likes",
+        localField: "_id",
+        foreignField: "video",
+        as: "likes",
+      },
+    },
+    { $unwind: { path: "$likes", preserveNullAndEmptyArrays: true } },
+    {
+      $project: {
+        title: 1,
+        // description: 1,
+        // video: 1,
+        thumbnail: 1,
+        // views: 1,
+        isPublished: 1,
+        createdAt: 1,
+        // updatedAt: 1,
+        likes: { $size: { $ifNull: ["$likes.likedBy", []] } },
+      },
+    },
+  ]);
+
   return res
     .status(200)
     .json(new ApiResponse(200, videos, "All channel videos"));
