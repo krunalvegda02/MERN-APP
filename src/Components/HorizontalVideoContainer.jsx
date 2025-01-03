@@ -42,7 +42,7 @@ function HorizontalVideoContainer({ id }) {
 
       {/* Video Details */}
       <div className="flex-col text-left ">
-        <h3 className="text-2xl  text-white font-normal mb-2">{video.title}</h3>
+        <h3 className="text-2xl  text-white font-normal text-ellipsis overflow-hidden whitespace-nowrap  max-w-[330px] mb-2">{video.title}</h3>
 
         {/* Views and Created At */}
         <div className="flex  text-xs text-gray-400 mt-1 overflow-auto">
@@ -62,7 +62,7 @@ function HorizontalVideoContainer({ id }) {
             </div>
           </div>
         </div>
-        <h3 className="text-xs pt-2  text-white  text-ellipsis overflow-hidden  max-w-[350px]">
+        <h3 className="text-xs pt-2  text-white  text-ellipsis overflow-hidden whitespace-nowrap  max-w-[350px]">
           {video.description}
         </h3>
       </div>

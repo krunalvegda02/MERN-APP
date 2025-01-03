@@ -79,8 +79,8 @@ function PlaylistPage() {
           <div className=" relative">
             <img
               src={
-                "https://limitlessneurolab.com/wp-content/uploads/2024/03/bg-blur-tailwind-1024x585.png" ||
-                playlist.videos[0].thumbnail
+                playlist.videos[0]?.thumbnail ||
+                "https://tse4.mm.bing.net/th?id=OIP.hOxRAamDzpX0wH9QTatSbAHaEc&pid=Api&P=0&h=180"
               }
               alt="PlayListimage"
               className="h-48 "

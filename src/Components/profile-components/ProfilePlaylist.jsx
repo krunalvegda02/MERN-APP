@@ -38,6 +38,7 @@ function ProfilePlaylist({ isChannel, channelId }) {
 
   const CloseEditModal = () => {
     setEditModal(false);
+    getAllPlaylists();
   };
 
   const EditPlaylist = () => {
@@ -74,7 +75,7 @@ function ProfilePlaylist({ isChannel, channelId }) {
       >
         <p className="text-base flex text-white font-semibold">
           <EditFilled />
-        <p className=" ml-2">Edit</p>   
+          <p className=" ml-2">Edit</p>
         </p>
       </div>
       <div
@@ -83,7 +84,7 @@ function ProfilePlaylist({ isChannel, channelId }) {
         }}
       >
         <p className="text-base font-semibold  text-white">
-          <DeleteFilled className="mr-1"/> Delete
+          <DeleteFilled className="mr-1" /> Delete
         </p>
       </div>
       {editModal && (
@@ -126,22 +127,22 @@ function ProfilePlaylist({ isChannel, channelId }) {
                 <Link to={`/playlist/${i._id}`}>
                   <img
                     src={
-                      "https://limitlessneurolab.com/wp-content/uploads/2024/03/bg-blur-tailwind-1024x585.png" ||
-                      i.videos[0].thumbnail
+                      i.videos[0]?.thumbnail ||
+                      "https://tse4.mm.bing.net/th?id=OIP.hOxRAamDzpX0wH9QTatSbAHaEc&pid=Api&P=0&h=180"
                     }
                     alt="PlayListimage"
                     className="h-48 "
                   />
                 </Link>
-                <div className="flex justify-between  px-4  absolute bottom-0 backdrop-blur w-full h-14">
-                  <div className=" text-white text-left  text-sm pt-2">
+                <div className="flex justify-between  px-4  absolute bottom-0 backdrop-blur-[3px] w-full h-14">
+                  <div className=" text-black text-left font-semibold  text-sm pt-2">
                     <p>PLaylist</p>
-                    <div className="flex text-xs pt-1">
+                    <div className="flex text-xs  pt-1">
                       <p>{100} Views</p> <p className="px-3"> ● </p>
                       <p>{moment(i.createdAt).fromNow()}</p>
                     </div>
                   </div>
-                  <div className="text-white text-sm pt-3 ">
+                  <div className="text-black font-bold text-sm pt-3 ">
                     {i.videos.length} Videos
                   </div>
                 </div>

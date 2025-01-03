@@ -224,7 +224,7 @@ function DashboardComponent() {
                 <div className="ml-7 text-start">
                   <div className="flex ">
                     <Avatar h={30} w={30} src={i.thumbnail} />
-                    <p className="truncate max-w-[150px] ml-1 items-center flex">
+                    <p className="truncate max-w-[250px] ml-1 items-center flex">
                       {i.title}
                     </p>
                   </div>
